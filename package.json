@@ -1,0 +1,21 @@
+{
+  "name": "moodboardin",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://benhowdle89@bitbucket.org/benhowdle89/moodboard.git"
+  },
+  "author": "Ben Howdle <hello@benhowdle.im> (http://benhowdle.im/)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.9.5",
+    "hbs": "^2.7.0",
+    "http": "0.0.0",
+    "path": "^0.4.9"
+  }
+}
