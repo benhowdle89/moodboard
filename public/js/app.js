@@ -31,6 +31,7 @@ module.exports = Backbone.Router.extend({
 	renderLayout: function(){
 		regions.header = $('[data-js-region="header"]');
 		regions.footer = $('[data-js-region="footer"]');
+		regions.content = $('[data-js-region="content"]');
 		this.renderHeader();
 		this.renderFooter();
 	},
