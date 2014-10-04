@@ -1,0 +1,141 @@
+$grid-container-width : 1240;
+$grid-column-count : 12;
+$grid-gutter-width : 55;
+$sidebar-width: 190px;
+$settings-width: 260px;
+
+$med-width: 835px;
+$small-width: 520px;
+
+/** Calculations used for converting grid metrics into unit-suffixed widths, don't change these unless you want something weird like an em-based container width **/
+$fixed-metric : 1px;
+$fluid-metric : 1%;
+
+/** Sassy maths to calculate the column widths, don't change this **/
+$width-without-gutters : $grid-container-width - ($grid-gutter-width * ($grid-column-count - 1));
+$column-width-in-px : $width-without-gutters / $grid-column-count;
+$column-width : $column-width-in-px / $grid-container-width * 100;
+$gutter-size : $grid-gutter-width / $grid-container-width * 100;
+
+@import "grid-mixins";
+
+.grid-container {
+    width: 100%;
+    max-width: $grid-container-width * $fixed-metric;
+    padding: 0 ($grid-gutter-width / 2 * $fixed-metric);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: auto;
+    display: block;
+    overflow: auto;
+    &.fluid {
+      max-width: 100%;
+      margin: 0;
+      float: left;
+      padding-right: 0;
+      padding-left: 0;
+      @media (min-width:740px) {
+        padding-left: $sidebar-width;
+      }
+      &.settings {
+        @media (min-width:740px) {
+          padding-left: $settings-width;
+        }
+      }
+    }
+}
+
+.grid-overlay {
+    height: 2000px;
+    div {
+        height: 2000px;
+        background: rgba(0,0,0,.01) !important;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+        position: relative;
+        $gutter-margin : $grid-gutter-width / $column-width-in-px * 100;
+        $gutter-margin : $gutter-margin/2 * -1 * $fluid-metric;
+        &:after {
+            display: block;
+            position: absolute;
+            right: $gutter-margin;
+            height: 100%;
+            width: 1px;
+            border-left: 1px dashed #e5e5e5;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            content: ' ';
+        }
+        &:first-child {
+            &:before {
+                display: block;
+                position: absolute;
+                left: $gutter-margin;
+                height: 100%;
+                width: 1px;
+                border-left: 1px dashed #e5e5e5;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                content: ' ';
+            }
+        }
+    }
+}
+
+.column {
+    margin-right: $gutter-size * $fluid-metric;
+    display: block;
+    float: left;
+    &:last-child {
+        margin-right: 0;
+    }
+    -webkit-transition: width .2s;
+            transition: width .2s;
+}
+
+@for $i from 1 through $grid-column-count {
+    @if $i == 1 {
+        .grid-span-#{$i} {
+            @extend .column;
+            width: $column-width * $fluid-metric;
+        }
+    }
+    @else {
+        .grid-span-#{$i} {
+            @extend .column;
+            $gutters : $i - 1;
+            $span-width : ($column-width * $i) + $gutter-size * $gutters * $fluid-metric;
+            $cut-off : $grid-column-count / $i;
+            width: $span-width;
+            @include divisions($span-width / ($span-width * 0 + 1));
+            @media (max-width: $med-width) {
+                @if($i > 2) {
+                    $gutters : ($i * 2) - 1;
+                    $span-width : ($column-width * $i * 2) + $gutter-size * $gutters * $fluid-metric;
+                    @if($span-width > 100%) {
+                        $span-width : 100%;
+                    }
+                    width: $span-width;
+                    $cut-off : $grid-column-count / ($i * 2);
+                }
+            }
+            @media (max-width: $small-width) {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.omega {
+    margin-right: 0;
+}
+
+@import 'grid-offsets';

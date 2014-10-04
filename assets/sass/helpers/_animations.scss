@@ -1,0 +1,22 @@
+/** Mixins for different animation long–hand options **/
+
+@mixin animation($animation) {
+  animation: $animation;
+}
+
+@mixin animation-name($name) {
+  animation-name: $name;
+}
+
+@mixin animation-fill-mode($mode) {
+  animation-fill-mode: $mode;
+}
+
+@mixin animation-delay($delay) {
+  animation-delay: $delay;
+}
+
+/** Mixin for keyframe syntax **/
+@mixin keyframes($name) {
+  @-webkit-keyframes #{name} { @content; }
+}

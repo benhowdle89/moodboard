@@ -14,6 +14,12 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.9.5",
+    "gulp": "^3.8.8",
+    "gulp-autoprefixer": "^1.0.1",
+    "gulp-clean": "^0.3.1",
+    "gulp-livereload": "^2.1.1",
+    "gulp-sass": "^1.0.0",
+    "gulp-watch": "^1.0.7",
     "hbs": "^2.7.0",
     "http": "0.0.0",
     "path": "^0.4.9"

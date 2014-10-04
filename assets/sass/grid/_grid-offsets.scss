@@ -1,0 +1,15 @@
+@for $i from 1 through $grid-column-count {
+    @if $i == 1 {
+        .offset-#{$i} {
+            margin-left: $column-width + ($gutter-size * $i) * $fluid-metric;
+        }
+    }
+    @else {
+        .offset-#{$i} {
+            margin-left: ($column-width * ($i - 1)) + ($gutter-size * $i) * $fluid-metric;
+            @media (max-width: $med-width) {
+                margin-left: 0;
+            }
+        }
+    }
+}
