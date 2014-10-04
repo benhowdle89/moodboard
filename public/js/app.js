@@ -5,10 +5,25 @@ var Backbone = require('backbone');
 // internal modules
 var appRouter = require('./routers/app-router');
 
-new appRouter(function() {
+var router = new appRouter(function() {
 	Backbone.history.start({
 		pushState: true
 	});
+
+	if (Backbone.history && Backbone.history._hasPushState) {
+		$(document).on("click", "a[href]", function(evt) {
+			// if we really don't want it to use pushState, place [data-no-hijack] on the <a /> link
+			if ($(this).attr('data-no-hijack') === undefined) {
+				var href = $(this).attr("href").slice(1);
+				evt.preventDefault();
+				// use the main app-router to route to this new URL
+				router.navigate(href, {
+					trigger: true
+				});
+			}
+		});
+	}
+
 });
 },{"./routers/app-router":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/routers/app-router.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/routers/app-router.js":[function(require,module,exports){
 // libraries
