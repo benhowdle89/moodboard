@@ -183,7 +183,7 @@ app.get('/api/check-auth', function(req, res, next) {
 
 		});
 	} else {
-		res.send(401);
+		res.status(401).end();
 	}
 });
 
