@@ -1,6 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./assets/js/main.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
+var $ = require('jquery');
 
 // internal modules
 var appRouter = require('./routers/app-router');
@@ -25,25 +26,32 @@ var router = new appRouter(function() {
 	}
 
 });
-},{"./routers/app-router":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/routers/app-router.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/routers/app-router.js":[function(require,module,exports){
+},{"./routers/app-router":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/routers/app-router.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/config/settings.js":[function(require,module,exports){
+module.exports = {
+	apiURL: (['127.0.0.1', 'localhost'].indexOf(window.location.hostname) > -1) ? "/api/" : 'http://moodboard.in/api/',
+};
+},{}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/routers/app-router.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');
 
 // internal modules
 var regions = require('./../utilities/regions.js');
+var auth = require('./../utilities/auth.js');
 
 // views
 var headerView = require('./../views/layout/header.js');
 var footerView = require('./../views/layout/footer.js');
 
 module.exports = Backbone.Router.extend({
-	initialize: function(callback){
-		this.renderLayout();
-		callback();
+	initialize: function(callback) {
+		auth.check(function() {
+			this.renderLayout();
+			callback();
+		}.bind(this));
 	},
 
-	renderLayout: function(){
+	renderLayout: function() {
 		regions.header = $('[data-js-region="header"]');
 		regions.footer = $('[data-js-region="footer"]');
 		regions.content = $('[data-js-region="content"]');
@@ -51,16 +59,43 @@ module.exports = Backbone.Router.extend({
 		this.renderFooter();
 	},
 
-	renderHeader: function(){
+	renderHeader: function() {
 		regions.header.html(new headerView().render().el);
 	},
 
-	renderFooter: function(){
+	renderFooter: function() {
 		regions.footer.html(new footerView().render().el);
 	}
 
 });
-},{"./../utilities/regions.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js","./../views/layout/footer.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/header.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js":[function(require,module,exports){
+},{"./../utilities/auth.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/auth.js","./../utilities/regions.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js","./../views/layout/footer.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/header.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/auth.js":[function(require,module,exports){
+var $ = require('jquery');
+
+var settings = require('./../config/settings');
+
+module.exports = {
+	user: null,
+	check: function(callback) {
+		var xhr = $.ajax({
+			url: settings.apiURL + 'check-auth',
+			success: function(data) {
+				if (xhr.status == 200) {
+					this.user = data;
+					callback(this.getUser());
+				}
+			}.bind(this),
+			error: function() {
+				if (xhr.status == 401) {
+					callback(null);
+				}
+			}
+		});
+	},
+	getUser: function() {
+		return this.user;
+	}
+};
+},{"./../config/settings":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/config/settings.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js":[function(require,module,exports){
 module.exports = {};
 },{}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/footer.js":[function(require,module,exports){
 // libraries

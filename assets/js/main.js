@@ -1,5 +1,6 @@
 // libraries
 var Backbone = require('backbone');
+var $ = require('jquery');
 
 // internal modules
 var appRouter = require('./routers/app-router');

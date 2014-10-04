@@ -82,12 +82,7 @@ passport.use(new LocalStrategy({
 	});
 }));
 
-app.use(function(req, res) {
-	res.render('index.html');
-});
-
 // routes
-
 
 app.post('/api/register', function(req, res, next) {
 	var userData = {};
@@ -196,6 +191,10 @@ app.get('/api/logout', function(req, res) {
 	req.logout();
 	req.session.destroy();
 	res.send(200);
+});
+
+app.use(function(req, res) {
+	res.render('index.html');
 });
 
 http.createServer(app).listen(app.get('port'), function() {

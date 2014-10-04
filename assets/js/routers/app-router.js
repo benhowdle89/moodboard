@@ -4,18 +4,21 @@ var $ = require('jquery');
 
 // internal modules
 var regions = require('./../utilities/regions.js');
+var auth = require('./../utilities/auth.js');
 
 // views
 var headerView = require('./../views/layout/header.js');
 var footerView = require('./../views/layout/footer.js');
 
 module.exports = Backbone.Router.extend({
-	initialize: function(callback){
-		this.renderLayout();
-		callback();
+	initialize: function(callback) {
+		auth.check(function() {
+			this.renderLayout();
+			callback();
+		}.bind(this));
 	},
 
-	renderLayout: function(){
+	renderLayout: function() {
 		regions.header = $('[data-js-region="header"]');
 		regions.footer = $('[data-js-region="footer"]');
 		regions.content = $('[data-js-region="content"]');
@@ -23,11 +26,11 @@ module.exports = Backbone.Router.extend({
 		this.renderFooter();
 	},
 
-	renderHeader: function(){
+	renderHeader: function() {
 		regions.header.html(new headerView().render().el);
 	},
 
-	renderFooter: function(){
+	renderFooter: function() {
 		regions.footer.html(new footerView().render().el);
 	}
 
