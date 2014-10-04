@@ -13,15 +13,24 @@
   "author": "Ben Howdle <hello@benhowdle.im> (http://benhowdle.im/)",
   "license": "ISC",
   "dependencies": {
+    "backbone": "^1.1.2",
     "express": "^4.9.5",
+    "hbs": "^2.7.0",
+    "jquery": "^2.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^6.0.2",
     "gulp": "^3.8.8",
     "gulp-autoprefixer": "^1.0.1",
     "gulp-clean": "^0.3.1",
+    "gulp-css-globbing": "^0.1.4",
     "gulp-livereload": "^2.1.1",
     "gulp-sass": "^1.0.0",
     "gulp-watch": "^1.0.7",
+    "handlebars": "^2.0.0",
     "hbs": "^2.7.0",
-    "http": "0.0.0",
-    "path": "^0.4.9"
+    "hbsfy": "^2.2.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^1.0.6"
   }
 }
