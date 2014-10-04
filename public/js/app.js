@@ -38,10 +38,12 @@ var $ = require('jquery');
 // internal modules
 var regions = require('./../utilities/regions.js');
 var auth = require('./../utilities/auth.js');
+var swap = require('./../utilities/swap.js');
 
 // views
 var headerView = require('./../views/layout/header.js');
 var footerView = require('./../views/layout/footer.js');
+var homeView = require('./../views/home/index.js');
 
 module.exports = Backbone.Router.extend({
 	initialize: function(callback) {
@@ -49,6 +51,10 @@ module.exports = Backbone.Router.extend({
 			this.renderLayout();
 			callback();
 		}.bind(this));
+	},
+
+	routes: {
+		"": "home"
 	},
 
 	renderLayout: function() {
@@ -60,15 +66,19 @@ module.exports = Backbone.Router.extend({
 	},
 
 	renderHeader: function() {
-		regions.header.html(new headerView().render().el);
+		swap(regions.header, new headerView());
 	},
 
 	renderFooter: function() {
-		regions.footer.html(new footerView().render().el);
+		swap(regions.footer, new footerView());
+	},
+
+	home: function() {
+		swap(regions.content, new homeView());
 	}
 
 });
-},{"./../utilities/auth.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/auth.js","./../utilities/regions.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js","./../views/layout/footer.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/header.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/auth.js":[function(require,module,exports){
+},{"./../utilities/auth.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/auth.js","./../utilities/regions.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js","./../utilities/swap.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/swap.js","./../views/home/index.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/home/index.js","./../views/layout/footer.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/header.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/auth.js":[function(require,module,exports){
 var $ = require('jquery');
 
 var settings = require('./../config/settings');
@@ -97,7 +107,56 @@ module.exports = {
 };
 },{"./../config/settings":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/config/settings.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js":[function(require,module,exports){
 module.exports = {};
-},{}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/footer.js":[function(require,module,exports){
+},{}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/swap.js":[function(require,module,exports){
+module.exports = function(region, newView) {
+
+	function processExit(callback) {
+		var oldView = region.view;
+		if (oldView) {
+			oldView.unbind();
+			if (oldView.model) {
+				oldView.model.unbind('change', oldView.render, oldView);
+			}
+			if (oldView.beforeExit) {
+				oldView.beforeExit(function() {
+					callback();
+				});
+			}
+
+			oldView.remove();
+
+			delete oldView.$el;
+			delete oldView.el;
+
+			callback();
+
+		} else {
+			callback();
+		}
+	}
+
+	processExit(function() {
+		region.view = newView;
+		region.html(newView.render().el);
+	});
+
+};
+},{}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/home/index.js":[function(require,module,exports){
+// libraries
+var Backbone = require('backbone');
+var $ = require('jquery');
+Backbone.$ = $;
+
+// templates
+var footerTemplate = require('./../../../templates/home/index.html');
+
+module.exports = Backbone.View.extend({
+	render: function(){
+		this.$el.html(footerTemplate());
+		return this;
+	}
+});
+},{"./../../../templates/home/index.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/home/index.html","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/footer.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');
@@ -127,7 +186,14 @@ module.exports = Backbone.View.extend({
 		return this;
 	}
 });
-},{"./../../../templates/layout/header.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/layout/header.html","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/layout/footer.html":[function(require,module,exports){
+},{"./../../../templates/layout/header.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/layout/header.html","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/home/index.html":[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "HOMEPAGE";
+  },"useData":true});
+
+},{"hbsfy/runtime":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/hbsfy/runtime.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/layout/footer.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
