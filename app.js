@@ -3,6 +3,7 @@ var http = require('http');
 var path = require('path');
 var hbs = require('hbs');
 var session = require('express-session');
+var bodyParser = require('body-parser');
 var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 var mongodb = require('mongodb');
@@ -13,6 +14,11 @@ var gravatar = require('gravatar');
 var userModel = require('./models/user.js');
 
 var app = express();
+
+app.use(bodyParser.urlencoded({
+	extended: false
+}));
+app.use(bodyParser.json());
 
 app.set('port', process.env.PORT || 5000);
 
@@ -86,7 +92,12 @@ passport.use(new LocalStrategy({
 
 app.post('/api/register', function(req, res, next) {
 	var userData = {};
-	if (!req.body.fullname) {
+	if (!req.body) {
+		return res.send(403, {
+			error: "No user data supplied"
+		});
+	}
+	if (!req.body.name) {
 		return res.send(403, {
 			error: "Fullname required"
 		});
