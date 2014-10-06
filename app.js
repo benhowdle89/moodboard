@@ -90,6 +90,8 @@ passport.use(new LocalStrategy({
 
 // routes
 
+var routes = require('./routes/index.js');
+
 app.post('/api/register', function(req, res, next) {
 	var userData = {};
 	if (!req.body) {
@@ -203,6 +205,8 @@ app.get('/api/logout', function(req, res) {
 	req.session.destroy();
 	res.send(200);
 });
+
+app.post('/api/instagram/search', routes.instagramSearch);
 
 app.use(function(req, res) {
 	res.render('index.html');
