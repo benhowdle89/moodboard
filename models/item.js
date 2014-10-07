@@ -4,7 +4,7 @@ var ObjectId = Schema.ObjectId;
 
 // define user schema
 var ItemSchema = new Schema({
-	instagram_media_id: String,
+	media_id: String,
 	board_id: {
 		type: ObjectId,
 		ref: 'Board'

@@ -207,6 +207,9 @@ app.get('/api/logout', function(req, res) {
 });
 
 app.post('/api/instagram/search', routes.instagramSearch);
+app.post('/api/boards', routes.createBoard);
+app.post('/api/boards/:id', routes.addToBoard);
+app.get('/api/boards/:id/items', routes.getBoardItems);
 
 app.use(function(req, res) {
 	res.render('index.html');

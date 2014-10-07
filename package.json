@@ -13,6 +13,7 @@
   "author": "Ben Howdle <hello@benhowdle.im> (http://benhowdle.im/)",
   "license": "ISC",
   "dependencies": {
+    "async": "^0.9.0",
     "backbone": "^1.1.2",
     "bcrypt": "^0.8.0",
     "body-parser": "^1.9.0",

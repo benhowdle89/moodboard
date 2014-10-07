@@ -32,8 +32,8 @@ module.exports = {
 					if (err) {
 						return callback(err, null);
 					}
-					redisClient.setItem('instagram-item-' + media_id, media.data, 1);
-					return callback(null, media.data);
+					redisClient.setItem('instagram-item-' + media_id, media, 1);
+					return callback(null, media);
 				});
 			} else {
 				return callback(null, result);
