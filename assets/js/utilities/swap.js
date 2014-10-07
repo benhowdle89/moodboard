@@ -1,29 +1,34 @@
 module.exports = function(region, newView) {
 
-	function processExit(callback) {
+	var processExit = function(callback) {
 		var oldView = region.view;
 		if (oldView) {
 			oldView.unbind();
 			if (oldView.model) {
 				oldView.model.unbind('change', oldView.render, oldView);
 			}
-			if (oldView.beforeExit) {
-				oldView.beforeExit(function() {
+
+			var hasExit = function(callback) {
+				if (oldView.beforeExit) {
+					oldView.beforeExit(callback);
+				} else {
 					callback();
-				});
-			}
+				}
+			};
 
-			oldView.remove();
+			hasExit(function() {
+				oldView.remove();
 
-			delete oldView.$el;
-			delete oldView.el;
+				delete oldView.$el;
+				delete oldView.el;
 
-			callback();
+				callback();
+			});
 
 		} else {
 			callback();
 		}
-	}
+	};
 
 	processExit(function() {
 		region.view = newView;
