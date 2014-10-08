@@ -204,6 +204,8 @@ app.get('/api/logout', function(req, res) {
 	res.send(200);
 });
 
+var routes = require('./routes/');
+
 app.use(function(req, res) {
 	res.render('index.html');
 });

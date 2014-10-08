@@ -103,6 +103,17 @@ module.exports = {
 	},
 	getUser: function() {
 		return this.user;
+	},
+	logout: function(callback) {
+		var xhr = $.ajax({
+			url: settings.apiURL + 'logout',
+			success: function(data) {
+				if (xhr.status == 200) {
+					this.user = null;
+					callback();
+				}
+			}.bind(this)
+		});
 	}
 };
 },{"./../config/settings":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/config/settings.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js":[function(require,module,exports){
