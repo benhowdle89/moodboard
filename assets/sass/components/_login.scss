@@ -1,0 +1,11 @@
+.form__login {
+  padding: $font-size-base;
+  text-align: center;
+  background: $color-bg-highlight;
+  border-radius: $radius-base;
+  font-size: $font-size-base * 1.4;
+  input {
+    display: block;
+    margin-bottom: $font-size-base;
+  }
+}
