@@ -14,8 +14,8 @@ var hbsfy = require("hbsfy").configure({
 });
 
 // CSS concat, auto-prefix and minify
-gulp.task('sass', function() {
-	gulp.src(['./assets/sass/*.css.scss'])
+gulp.task('css', function() {
+	gulp.src(['./assets/sass/*.scss'])
 		.pipe(sass())
 		.pipe(autoprefix('last 2 versions'))
 		.pipe(gulp.dest('./public/css/'))
@@ -39,7 +39,7 @@ gulp.task('scripts', function() {
 });
 
 // default gulp task
-gulp.task('default', ['sass', 'scripts'], function() {
+gulp.task('default', ['css', 'scripts'], function() {
 	// watch for CSS changes
-	gulp.watch('./assets/sass/*.scss', ['sass']);
+	gulp.watch('./assets/sass/*.scss', ['css']);
 });
