@@ -4,11 +4,16 @@ var $ = require('jquery');
 Backbone.$ = $;
 
 // templates
-var footerTemplate = require('./../../../templates/home/index.html');
+var template = require('./../../../templates/home/index.html');
 
 module.exports = Backbone.View.extend({
-	render: function(){
-		this.$el.html(footerTemplate());
+
+	initialize: function(options) {
+		options = options || {};
+	},
+
+	render: function() {
+		this.$el.html(template());
 		return this;
 	}
 });
