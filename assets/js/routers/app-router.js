@@ -32,7 +32,8 @@ module.exports = Backbone.Router.extend({
 		"": "home",
 		"home": "home",
 		"search/:term": "search",
-		"profile": "profile"
+		"profile": "profile",
+		"logout": "logout"
 	},
 
 	renderLayout: function() {
@@ -44,7 +45,10 @@ module.exports = Backbone.Router.extend({
 	},
 
 	renderHeader: function() {
-		swap(regions.header, new headerView());
+		swap(regions.header, new headerView({
+			user: auth.user,
+			router: this
+		}));
 	},
 
 	renderFooter: function() {
@@ -89,6 +93,15 @@ module.exports = Backbone.Router.extend({
 				user: auth.user
 			}));
 		});
+	},
+
+	logout: function() {
+		auth.logout(function() {
+			this.renderLayout();
+			this.navigate('home', {
+				trigger: true
+			});
+		}.bind(this));
 	}
 
 });

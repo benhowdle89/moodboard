@@ -203,7 +203,7 @@ app.get('/api/check-auth', function(req, res, next) {
 app.get('/api/logout', function(req, res) {
 	req.logout();
 	req.session.destroy();
-	res.send(200);
+	res.status(200).end();
 });
 
 app.post('/api/instagram/search', routes.instagramSearch);

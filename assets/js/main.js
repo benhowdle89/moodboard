@@ -4,6 +4,7 @@ var $ = require('jquery');
 
 // internal modules
 var appRouter = require('./routers/app-router');
+require('./scott');
 
 var router = new appRouter(function() {
 	Backbone.history.start({
