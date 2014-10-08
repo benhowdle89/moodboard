@@ -1,7 +1,11 @@
+// Modular scale
+$scale : 0.75, 0.844, 1.126, 1.5, 2, 2.666, 4.209;
+
 // Main scheme
 $color-primary : blue;
-$color-secondary : yellow;
+$color-secondary : #447297;
 $color-bg : white;
+$color-bg-header : $color-secondary;
 
 // Errors and alerts
 $color-error : red;
@@ -18,3 +22,6 @@ $color-bg-flash : darken($color-bg, 10);
 $z-index-base : 1;
 $z-index-overlay : $z-index-base + 10;
 $z-index-modal : $z-index-overlay + 10;
+
+// Border radius
+$radius-base: 4px;
