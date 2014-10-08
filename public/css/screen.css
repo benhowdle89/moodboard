@@ -914,6 +914,8 @@ h1 {
 .icon-smashing:before {
   content: "\e71b"; }
 
+/** Mixins for different animation long–hand options **/
+/** Mixin for keyframe syntax **/
 /** Calculations used for converting grid metrics into unit-suffixed widths, don't change these unless you want something weird like an em-based container width **/
 /** Sassy maths to calculate the column widths, don't change this **/
 .grid-container {
@@ -3083,6 +3085,87 @@ h1 {
   @media (max-width: 835px) {
     .offset-12 {
       margin-left: 0; } }
+
+.badge {
+  min-width: 1em;
+  height: 1em;
+  text-align: center;
+  line-height: 1; }
+
+.button {
+  display: inline-block;
+  padding: 0.5em 1.4em 0.7em;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 4px;
+  font-family: "Avenir", sans-serif;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  background: #e6e6e6;
+  text-transform: uppercase;
+  font-weight: bold;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out; }
+  .button:active {
+    box-shadow: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.3); }
+  .button i {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 4px;
+    margin-right: 0.3em; }
+
+.button__primary {
+  background: blue; }
+
+.button__secondary {
+  background: yellow; }
+
+.button__success {
+  background: green; }
+
+.button__error {
+  background: red; }
+
+.button__warning {
+  background: yellow; }
+
+.buttons {
+  text-align: center; }
+
+.flash-message {
+  padding: 1rem 0;
+  background: #e6e6e6;
+  width: 100%;
+  text-align: center; }
+
+.flash-message--success .flash-message--bg-color {
+  background: green;
+  color: #4dff4d; }
+
+input {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0.5em;
+  margin-bottom: 0.4em;
+  display: block;
+  width: 90%;
+  max-width: 400px; }
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: #444;
+  -webkit-font-smoothing: antialiased; }
+
+.control-group {
+  margin-bottom: 1.4em; }
+
+.form--inline {
+  display: inline-block;
+  padding: 0;
+  margin: 0; }
 
 .app-header {
   padding: 1rem; }
