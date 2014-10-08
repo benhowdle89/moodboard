@@ -5,21 +5,21 @@
   text-align: center;
 }
 
-.flash-message--rounded {
-  border-radius: $radius-base;  
+.flash-message__rounded {
+  border-radius: $radius-base;
 }
 
-.flash-message--success {
+.flash-message__success {
   background: $color-success;
   color: lighten($color-success, 40);
 }
 
-.flash-message--error {
+.flash-message__error {
   background: $color-error;
   color: lighten($color-error, 40);
 }
 
-.flash-message--warning {
+.flash-message__warning {
   background: $color-warning;
   color: lighten($color-warning, 40);
 }

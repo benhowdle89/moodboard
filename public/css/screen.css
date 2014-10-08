@@ -3077,7 +3077,7 @@ body {
   font-family: "Avenir", sans-serif;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   text-decoration: none;
-  background: #e6e6e6;
+  background: #e1e1e1;
   text-transform: uppercase;
   font-weight: bold;
   -webkit-transition: all 0.2s ease-in-out;
@@ -3111,22 +3111,22 @@ body {
 
 .flash-message {
   padding: 1rem 0;
-  background: #e6e6e6;
+  background: #e1e1e1;
   width: 100%;
   text-align: center; }
 
-.flash-message--rounded {
+.flash-message__rounded {
   border-radius: 4px; }
 
-.flash-message--success {
+.flash-message__success {
   background: green;
   color: #4dff4d; }
 
-.flash-message--error {
+.flash-message__error {
   background: red;
   color: #ffcccc; }
 
-.flash-message--warning {
+.flash-message__warning {
   background: yellow;
   color: #fffecc; }
 
@@ -3149,10 +3149,22 @@ label {
 .control-group {
   margin-bottom: 1.4em; }
 
-.form--inline {
+.form__inline {
   display: inline-block;
   padding: 0;
   margin: 0; }
+  .form__inline input, .form__inline button {
+    display: inline-block; }
 
 .app-header {
   padding: 1rem; }
+
+.form__login {
+  padding: 1rem;
+  text-align: center;
+  background: white;
+  border-radius: 4px;
+  font-size: 1.4rem; }
+  .form__login input {
+    display: block;
+    margin-bottom: 1rem; }
