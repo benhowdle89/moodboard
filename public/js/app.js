@@ -195,7 +195,7 @@ module.exports = Backbone.View.extend({
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "HOMEPAGE\n\n<input type=\"text\" name=\"term\" placeholder=\"Search Instagram...\" />\n";
+  return "HOMEPAGE\n";
   },"useData":true});
 
 },{"hbsfy/runtime":"/Users/Scott/Copy/web/moodboard/node_modules/hbsfy/runtime.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/layout/footer.html":[function(require,module,exports){
