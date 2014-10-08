@@ -1,11 +1,14 @@
 @import 'setup/variables';
+@import 'setup/type';
 @import 'setup/base';
 @import 'setup/icons';
 
 @import 'grid/grid-mixins';
-@import 'grid/grid-offsets';
 @import 'grid/grid';
+@import 'grid/grid-offsets';
 
 @import 'objects/badges';
 @import 'objects/buttons';
 @import 'objects/forms';
+
+@import 'components/header';

@@ -1,8 +1,6 @@
-$grid-container-width : 1240;
+$grid-container-width : 1020;
 $grid-column-count : 12;
-$grid-gutter-width : 55;
-$sidebar-width: 190px;
-$settings-width: 260px;
+$grid-gutter-width : 56;
 
 $med-width: 835px;
 $small-width: 520px;
@@ -35,14 +33,6 @@ $gutter-size : $grid-gutter-width / $grid-container-width * 100;
       float: left;
       padding-right: 0;
       padding-left: 0;
-      @media (min-width:740px) {
-        padding-left: $sidebar-width;
-      }
-      &.settings {
-        @media (min-width:740px) {
-          padding-left: $settings-width;
-        }
-      }
     }
 }
 
@@ -95,8 +85,10 @@ $gutter-size : $grid-gutter-width / $grid-container-width * 100;
     &:last-child {
         margin-right: 0;
     }
-    -webkit-transition: width .2s;
-            transition: width .2s;
+    &.float-right {
+      float: right;
+      text-align: right;
+    }
 }
 
 @for $i from 1 through $grid-column-count {
