@@ -3115,6 +3115,9 @@ body {
   width: 100%;
   text-align: center; }
 
+.flash-message--rounded {
+  border-radius: 4px; }
+
 .flash-message--success {
   background: green;
   color: #4dff4d; }

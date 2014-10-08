@@ -14,7 +14,17 @@ $color-bg-button : darken($color-bg, 10);
 // Flash/alerts
 $color-bg-flash : darken($color-bg, 10);
 
+// Border radius variables
+$radius-base : 4px;
+
 // Z-index
 $z-index-base : 1;
 $z-index-overlay : $z-index-base + 10;
 $z-index-modal : $z-index-overlay + 10;
+
+// Timing scale for animations
+$timing-base : 160;
+$timing-normal : $timing-base * 1ms;
+$timing-longer : $timing-base * 1.4 * 1ms;
+
+// Cubic bezier curves for animations

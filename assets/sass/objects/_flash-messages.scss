@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+.flash-message--rounded {
+  border-radius: $radius-base;  
+}
+
 .flash-message--success {
   background: $color-success;
   color: lighten($color-success, 40);
