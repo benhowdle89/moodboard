@@ -104,7 +104,7 @@ app.post('/api/register', function(req, res, next) {
 			error: "Fullname required"
 		});
 	} else {
-		userData.name = req.body.fullname;
+		userData.name = req.body.name;
 	}
 
 	if (!req.body.email) {
@@ -208,6 +208,7 @@ app.get('/api/logout', function(req, res) {
 
 app.post('/api/instagram/search', routes.instagramSearch);
 app.post('/api/boards', routes.createBoard);
+app.get('/api/boards', routes.getBoards);
 app.post('/api/boards/:id', routes.addToBoard);
 app.get('/api/boards/:id/items', routes.getBoardItems);
 

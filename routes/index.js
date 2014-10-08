@@ -14,6 +14,9 @@ module.exports = {
 		});
 	},
 	createBoard: function(req, res, next) {
+		if (!req.body.name) {
+			return status(404).end();
+		}
 		var boardData = {
 			name: req.body.name,
 			user_id: req.user._id
@@ -36,6 +39,9 @@ module.exports = {
 		});
 	},
 	addToBoard: function(req, res, next) {
+		if (!req.body.media_id || !req.params.id) {
+			return status(404).end();
+		}
 		var itemData = {
 			board_id: req.params.id,
 			media_id: req.body.media_id,
@@ -58,7 +64,20 @@ module.exports = {
 			}
 		});
 	},
+	getBoards: function(req, res, next) {
+		boardModel.find({
+			user_id: req.user._id
+		}, function(err, results) {
+			if (err) {
+				return next(err);
+			}
+			return res.status(200).send(results);
+		});
+	},
 	getBoardItems: function(req, res, next) {
+		if (!req.params.id) {
+			return status(404).end();
+		}
 		var data = {
 			board_id: req.params.id
 		};
