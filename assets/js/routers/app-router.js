@@ -4,18 +4,27 @@ var $ = require('jquery');
 
 // internal modules
 var regions = require('./../utilities/regions.js');
+var auth = require('./../utilities/auth.js');
+var swap = require('./../utilities/swap.js');
 
 // views
 var headerView = require('./../views/layout/header.js');
 var footerView = require('./../views/layout/footer.js');
+var homeView = require('./../views/home/index.js');
 
 module.exports = Backbone.Router.extend({
-	initialize: function(callback){
-		this.renderLayout();
-		callback();
+	initialize: function(callback) {
+		auth.check(function() {
+			this.renderLayout();
+			callback();
+		}.bind(this));
 	},
 
-	renderLayout: function(){
+	routes: {
+		"": "home"
+	},
+
+	renderLayout: function() {
 		regions.header = $('[data-js-region="header"]');
 		regions.footer = $('[data-js-region="footer"]');
 		regions.content = $('[data-js-region="content"]');
@@ -23,12 +32,16 @@ module.exports = Backbone.Router.extend({
 		this.renderFooter();
 	},
 
-	renderHeader: function(){
-		regions.header.html(new headerView().render().el);
+	renderHeader: function() {
+		swap(regions.header, new headerView());
 	},
 
-	renderFooter: function(){
-		regions.footer.html(new footerView().render().el);
+	renderFooter: function() {
+		swap(regions.footer, new footerView());
+	},
+
+	home: function() {
+		swap(regions.content, new homeView());
 	}
 
 });

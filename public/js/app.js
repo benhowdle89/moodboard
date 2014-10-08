@@ -1,6 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"./assets/js/main.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
+var $ = require('jquery');
 
 // internal modules
 var appRouter = require('./routers/app-router');
@@ -25,25 +26,38 @@ var router = new appRouter(function() {
 	}
 
 });
-},{"./routers/app-router":"/Users/Scott/Copy/web/moodboard/assets/js/routers/app-router.js","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/routers/app-router.js":[function(require,module,exports){
+},{"./routers/app-router":"/Users/Scott/Copy/web/moodboard/assets/js/routers/app-router.js","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/config/settings.js":[function(require,module,exports){
+module.exports = {
+	apiURL: (['127.0.0.1', 'localhost'].indexOf(window.location.hostname) > -1) ? "/api/" : 'http://moodboard.in/api/',
+};
+},{}],"/Users/Scott/Copy/web/moodboard/assets/js/routers/app-router.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');
 
 // internal modules
 var regions = require('./../utilities/regions.js');
+var auth = require('./../utilities/auth.js');
+var swap = require('./../utilities/swap.js');
 
 // views
 var headerView = require('./../views/layout/header.js');
 var footerView = require('./../views/layout/footer.js');
+var homeView = require('./../views/home/index.js');
 
 module.exports = Backbone.Router.extend({
-	initialize: function(callback){
-		this.renderLayout();
-		callback();
+	initialize: function(callback) {
+		auth.check(function() {
+			this.renderLayout();
+			callback();
+		}.bind(this));
 	},
 
-	renderLayout: function(){
+	routes: {
+		"": "home"
+	},
+
+	renderLayout: function() {
 		regions.header = $('[data-js-region="header"]');
 		regions.footer = $('[data-js-region="footer"]');
 		regions.content = $('[data-js-region="content"]');
@@ -51,18 +65,103 @@ module.exports = Backbone.Router.extend({
 		this.renderFooter();
 	},
 
-	renderHeader: function(){
-		regions.header.html(new headerView().render().el);
+	renderHeader: function() {
+		swap(regions.header, new headerView());
 	},
 
-	renderFooter: function(){
-		regions.footer.html(new footerView().render().el);
+	renderFooter: function() {
+		swap(regions.footer, new footerView());
+	},
+
+	home: function() {
+		swap(regions.content, new homeView());
 	}
 
 });
-},{"./../utilities/regions.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/regions.js","./../views/layout/footer.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/header.js","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/utilities/regions.js":[function(require,module,exports){
+},{"./../utilities/auth.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/auth.js","./../utilities/regions.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/regions.js","./../utilities/swap.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/swap.js","./../views/home/index.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/home/index.js","./../views/layout/footer.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/header.js","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/utilities/auth.js":[function(require,module,exports){
+var $ = require('jquery');
+
+var settings = require('./../config/settings');
+
+module.exports = {
+	user: null,
+	check: function(callback) {
+		var xhr = $.ajax({
+			url: settings.apiURL + 'check-auth',
+			success: function(data) {
+				if (xhr.status == 200) {
+					this.user = data;
+					callback(this.getUser());
+				}
+			}.bind(this),
+			error: function() {
+				if (xhr.status == 401) {
+					callback(null);
+				}
+			}
+		});
+	},
+	getUser: function() {
+		return this.user;
+	}
+};
+},{"./../config/settings":"/Users/Scott/Copy/web/moodboard/assets/js/config/settings.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/utilities/regions.js":[function(require,module,exports){
 module.exports = {};
-},{}],"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/footer.js":[function(require,module,exports){
+},{}],"/Users/Scott/Copy/web/moodboard/assets/js/utilities/swap.js":[function(require,module,exports){
+module.exports = function(region, newView) {
+
+	var processExit = function(callback) {
+		var oldView = region.view;
+		if (oldView) {
+			oldView.unbind();
+			if (oldView.model) {
+				oldView.model.unbind('change', oldView.render, oldView);
+			}
+
+			var hasExit = function(callback) {
+				if (oldView.beforeExit) {
+					oldView.beforeExit(callback);
+				} else {
+					callback();
+				}
+			};
+
+			hasExit(function() {
+				oldView.remove();
+
+				delete oldView.$el;
+				delete oldView.el;
+
+				callback();
+			});
+
+		} else {
+			callback();
+		}
+	};
+
+	processExit(function() {
+		region.view = newView;
+		region.html(newView.render().el);
+	});
+
+};
+},{}],"/Users/Scott/Copy/web/moodboard/assets/js/views/home/index.js":[function(require,module,exports){
+// libraries
+var Backbone = require('backbone');
+var $ = require('jquery');
+Backbone.$ = $;
+
+// templates
+var footerTemplate = require('./../../../templates/home/index.html');
+
+module.exports = Backbone.View.extend({
+	render: function(){
+		this.$el.html(footerTemplate());
+		return this;
+	}
+});
+},{"./../../../templates/home/index.html":"/Users/Scott/Copy/web/moodboard/assets/templates/home/index.html","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/footer.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');
@@ -92,7 +191,14 @@ module.exports = Backbone.View.extend({
 		return this;
 	}
 });
-},{"./../../../templates/layout/header.html":"/Users/Scott/Copy/web/moodboard/assets/templates/layout/header.html","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/layout/footer.html":[function(require,module,exports){
+},{"./../../../templates/layout/header.html":"/Users/Scott/Copy/web/moodboard/assets/templates/layout/header.html","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/home/index.html":[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "HOMEPAGE\n\n<input type=\"text\" name=\"term\" placeholder=\"Search Instagram...\" />\n";
+  },"useData":true});
+
+},{"hbsfy/runtime":"/Users/Scott/Copy/web/moodboard/node_modules/hbsfy/runtime.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/layout/footer.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
