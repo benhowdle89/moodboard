@@ -24,6 +24,7 @@
     "hbs": "^2.7.0",
     "instagram-node": "^0.5.1",
     "jquery": "^2.1.1",
+    "lodash": "^2.4.1",
     "mongodb": "^1.4.18",
     "mongoose": "^3.8.17",
     "passport": "^0.2.1",

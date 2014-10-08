@@ -211,6 +211,7 @@ app.post('/api/boards', routes.createBoard);
 app.get('/api/boards', routes.getBoards);
 app.post('/api/boards/:id', routes.addToBoard);
 app.get('/api/boards/:id/items', routes.getBoardItems);
+app.get('/api/items', routes.getUserItems);
 
 app.use(function(req, res) {
 	res.render('index.html');

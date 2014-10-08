@@ -10,7 +10,6 @@ module.exports = Backbone.View.extend({
 	initialize: function(options) {
 		options = options || {};
 		this.data = options.data;
-		console.log(this.data);
 	},
 	render: function() {
 		this.$el.html(template());

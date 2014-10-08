@@ -1,12 +1,17 @@
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');
+var _ = require('lodash');
 
 // internal modules
 var regions = require('./../utilities/regions.js');
 var auth = require('./../utilities/auth.js');
 var swap = require('./../utilities/swap.js');
 var instagram = require('./../utilities/instagram.js');
+
+// collections
+var itemsCollection = require('./../collections/items');
+var boardsCollection = require('./../collections/boards');
 
 // views
 var headerView = require('./../views/layout/header.js');
@@ -58,9 +63,20 @@ module.exports = Backbone.Router.extend({
 				trigger: true
 			});
 		}
-		swap(regions.content, new profileView({
-			user: auth.user
-		}));
+
+		var items = new itemsCollection();
+		var boards = new boardsCollection();
+
+		var collections = [items, boards];
+		var complete = _.invoke(collections, 'fetch');
+
+		$.when.apply($, complete).then(function() {
+			swap(regions.content, new profileView({
+				user: auth.user,
+				items: items,
+				boards: boards
+			}));
+		});
 	},
 
 	search: function(term) {

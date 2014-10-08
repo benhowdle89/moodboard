@@ -1,5 +1,3 @@
-var async = require('async');
-
 var instagram = require('./../modules/instagram');
 var boardModel = require('./../models/board');
 var itemModel = require('./../models/item');
@@ -88,23 +86,32 @@ module.exports = {
 			if (!items) {
 				return res.status(404).end();
 			}
-			var results = items;
-			async.map(items.map(function(item) {
-				return item.media_id;
-			}), instagram.fetch, function(err, items) {
+			instagram.populateItems(items, function(err, results) {
 				if (err) {
-					return next(err);
+					return res.status(404).end();
 				}
-				results = results.map(function(result) {
-					items.forEach(function(item) {
-						if (item.id == result.media_id) {
-							result.media = item;
-						}
-					});
-					return result;
-				});
+				return res.status(200).send(results).end();
+			});
+		});
+	},
+	getUserItems: function(req, res, next) {
+		var data = {
+			user_id: req.user._id
+		};
+		itemModel.find(data).lean().populate('board_id').exec(function(err, items) {
+			if (err) {
+				return next(err);
+			}
+			if (!items) {
+				return res.status(404).end();
+			}
+			instagram.populateItems(items, function(err, results) {
+				if (err) {
+					return res.status(404).end();
+				}
 				return res.status(200).send(results).end();
 			});
 		});
 	}
+
 };

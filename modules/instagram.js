@@ -1,3 +1,5 @@
+var async = require('async');
+
 var config = require('./../config.json');
 
 var redisClient = require('./redis');
@@ -38,6 +40,25 @@ module.exports = {
 			} else {
 				return callback(null, result);
 			}
+		});
+	},
+	populateItems: function(items, callback) {
+		var results = items;
+		async.map(items.map(function(item) {
+			return item.media_id;
+		}), this.fetch, function(err, items) {
+			if (err) {
+				return callback(err, null);
+			}
+			results = results.map(function(result) {
+				items.forEach(function(item) {
+					if (item.id == result.media_id) {
+						result.media = item;
+					}
+				});
+				return result;
+			});
+			return callback(null, results);
 		});
 	}
 };
