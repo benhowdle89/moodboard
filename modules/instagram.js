@@ -16,11 +16,17 @@ module.exports = {
 					if (err) {
 						return callback(err, null);
 					}
-					medias.forEach(function(media_item) {
-						redisClient.setItem('instagram-item-' + media_item.id, media_item, 1);
-					});
-					redisClient.setItem('instagram-search-' + term, medias, 1);
-					return callback(null, medias);
+					if (medias && medias.length) {
+						medias.forEach(function(media_item) {
+							redisClient.setItem('instagram-item-' + media_item.id, media_item, 99999);
+						});
+						redisClient.setItem('instagram-search-' + term, medias, 6);
+						return callback(null, medias);
+					} else {
+						return callback({
+							error: "no_results"
+						}, null);
+					}
 				});
 			} else {
 				return callback(null, results);
@@ -34,8 +40,14 @@ module.exports = {
 					if (err) {
 						return callback(err, null);
 					}
-					redisClient.setItem('instagram-item-' + media_id, media, 99999);
-					return callback(null, media);
+					if (!media) {
+						redisClient.setItem('instagram-item-' + media_id, media, 99999);
+						return callback(null, media);
+					} else {
+						return callback({
+							error: "no_results"
+						}, null);
+					}
 				});
 			} else {
 				return callback(null, result);

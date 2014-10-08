@@ -607,7 +607,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "HEADER\n\n<div data-region=\"auth\"></div>";
+  return "<a href=\"/\">Moodboard</a>\n\n<div data-region=\"auth\"></div>";
   },"useData":true});
 
 },{"hbsfy/runtime":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/hbsfy/runtime.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/profile/index.html":[function(require,module,exports){
