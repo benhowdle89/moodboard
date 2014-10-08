@@ -1,6 +1,8 @@
+var $ = require('jquery');
+
 // Hide on load via JS
 $('[data-hide-on-load]').hide()
-//
+
 // Toggle elements based on data attributes
 $('[data-toggle]').on('click', function(e) {
   e.preventDefault();

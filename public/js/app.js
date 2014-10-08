@@ -33,9 +33,11 @@ module.exports = {
 	apiURL: (['127.0.0.1', 'localhost'].indexOf(window.location.hostname) > -1) ? "/api/" : 'http://moodboard.in/api/',
 };
 },{}],"/Users/Scott/Copy/web/moodboard/assets/js/frontend/interactions.js":[function(require,module,exports){
+var $ = require('jquery');
+
 // Hide on load via JS
 $('[data-hide-on-load]').hide()
-//
+
 // Toggle elements based on data attributes
 $('[data-toggle]').on('click', function(e) {
   e.preventDefault();
@@ -100,7 +102,7 @@ $("[data-submit-by-click]").on("submit", function(e) {
   e.preventDefault()
 });
 
-},{}],"/Users/Scott/Copy/web/moodboard/assets/js/frontend/scott.js":[function(require,module,exports){
+},{"jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/frontend/scott.js":[function(require,module,exports){
 var $ = require('jquery');
 var interactions = require('./interactions');
 
