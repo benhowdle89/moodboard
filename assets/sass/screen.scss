@@ -3,12 +3,15 @@
 @import 'setup/base';
 @import 'setup/icons';
 
+@import 'helpers/animations';
+
 @import 'grid/grid-mixins';
 @import 'grid/grid';
 @import 'grid/grid-offsets';
 
 @import 'objects/badges';
 @import 'objects/buttons';
+@import 'objects/flash-messages';
 @import 'objects/forms';
 
 @import 'components/header';

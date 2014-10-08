@@ -27,6 +27,7 @@ var router = new appRouter(function() {
 	}
 
 });
+<<<<<<< HEAD
 },{"./routers/app-router":"/Users/Scott/Copy/web/moodboard/assets/js/routers/app-router.js","./scott":"/Users/Scott/Copy/web/moodboard/assets/js/scott.js","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/collections/boards.js":[function(require,module,exports){
 var Backbone = require('backbone');
 
@@ -71,6 +72,13 @@ var itemModel = Backbone.Model.extend();
 
 module.exports = itemModel;
 },{"backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/routers/app-router.js":[function(require,module,exports){
+=======
+},{"./routers/app-router":"/Users/Scott/Copy/web/moodboard/assets/js/routers/app-router.js","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/config/settings.js":[function(require,module,exports){
+module.exports = {
+	apiURL: (['127.0.0.1', 'localhost'].indexOf(window.location.hostname) > -1) ? "/api/" : 'http://moodboard.in/api/',
+};
+},{}],"/Users/Scott/Copy/web/moodboard/assets/js/routers/app-router.js":[function(require,module,exports){
+>>>>>>> master
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');
@@ -193,11 +201,15 @@ module.exports = Backbone.Router.extend({
 	}
 
 });
+<<<<<<< HEAD
 },{"./../collections/boards":"/Users/Scott/Copy/web/moodboard/assets/js/collections/boards.js","./../collections/items":"/Users/Scott/Copy/web/moodboard/assets/js/collections/items.js","./../utilities/auth.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/auth.js","./../utilities/instagram.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/instagram.js","./../utilities/regions.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/regions.js","./../utilities/swap.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/swap.js","./../views/board/":"/Users/Scott/Copy/web/moodboard/assets/js/views/board/index.js","./../views/home/":"/Users/Scott/Copy/web/moodboard/assets/js/views/home/index.js","./../views/layout/footer.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/header.js","./../views/profile/":"/Users/Scott/Copy/web/moodboard/assets/js/views/profile/index.js","./../views/search/":"/Users/Scott/Copy/web/moodboard/assets/js/views/search/index.js","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js","lodash":"/Users/Scott/Copy/web/moodboard/node_modules/lodash/dist/lodash.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/scott.js":[function(require,module,exports){
 var $ = require('jquery');
 
 console.log('some DOM coding');
 },{"jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/utilities/auth.js":[function(require,module,exports){
+=======
+},{"./../utilities/auth.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/auth.js","./../utilities/regions.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/regions.js","./../utilities/swap.js":"/Users/Scott/Copy/web/moodboard/assets/js/utilities/swap.js","./../views/home/index.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/home/index.js","./../views/layout/footer.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/Scott/Copy/web/moodboard/assets/js/views/layout/header.js","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/utilities/auth.js":[function(require,module,exports){
+>>>>>>> master
 var $ = require('jquery');
 
 var settings = require('./../config/settings');
@@ -302,6 +314,7 @@ module.exports = function(region, newView) {
 	});
 
 };
+<<<<<<< HEAD
 },{}],"/Users/Scott/Copy/web/moodboard/assets/js/views/board/index.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
@@ -361,6 +374,9 @@ module.exports = Backbone.View.extend({
 	}
 });
 },{"./../../../templates/components/auth.html":"/Users/Scott/Copy/web/moodboard/assets/templates/components/auth.html","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/views/home/index.js":[function(require,module,exports){
+=======
+},{}],"/Users/Scott/Copy/web/moodboard/assets/js/views/home/index.js":[function(require,module,exports){
+>>>>>>> master
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');
@@ -553,6 +569,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	}
 });
+<<<<<<< HEAD
 },{"./../../../templates/search/result.html":"/Users/Scott/Copy/web/moodboard/assets/templates/search/result.html","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/board/index.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
@@ -594,16 +611,24 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "HOMEPAGE\n\n<input type=\"text\" name=\"term\" placeholder=\"Search Instagram...\" />\n";
+=======
+},{"./../../../templates/layout/header.html":"/Users/Scott/Copy/web/moodboard/assets/templates/layout/header.html","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/home/index.html":[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "HOMEPAGE\n";
+>>>>>>> master
   },"useData":true});
 
 },{"hbsfy/runtime":"/Users/Scott/Copy/web/moodboard/node_modules/hbsfy/runtime.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/layout/footer.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "FOOTER";
+  return "<div class=\"footer-row\">\n  <div class=\"grid-container\">\n    <div class=\"column grid-span-3\">\n      &copy; Forever and ever.\n    </div>\n  </div>\n</div>\n";
   },"useData":true});
 
 },{"hbsfy/runtime":"/Users/Scott/Copy/web/moodboard/node_modules/hbsfy/runtime.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/layout/header.html":[function(require,module,exports){
+<<<<<<< HEAD
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
@@ -670,6 +695,14 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
   return buffer + "</div>\n";
 },"useData":true});
 
+=======
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<header class=\"app-header\">\n  <div class=\"grid-container\">\n    <div class=\"column grid-span-3\">\n      <a href=\"/\" class=\"logo\">Moodboard</a>\n    </div>\n    <div class=\"column grid-span-4 float-right\">\n      <div data-region=\"auth\"></div>\n    </div>\n  </div>\n</header>\n";
+  },"useData":true});
+
+>>>>>>> master
 },{"hbsfy/runtime":"/Users/Scott/Copy/web/moodboard/node_modules/hbsfy/runtime.js"}],"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js":[function(require,module,exports){
 //     Backbone.js 1.1.2
 

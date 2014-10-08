@@ -7,3 +7,9 @@ $color-bg : white;
 $color-error : red;
 $color-success : green;
 $color-warning : yellow;
+
+// Buttons
+$color-bg-button : darken($color-bg, 10);
+
+// Flash/alerts
+$color-bg-flash : darken($color-bg, 10);

@@ -1,0 +1,21 @@
+.flash-message {
+  padding: $font-size-base 0;
+  background: $color-bg-flash;
+  width: 100%;
+  text-align: center;
+}
+
+.flash-message--success {
+  background: $color-success;
+  color: lighten($color-success, 40);
+}
+
+.flash-message--error {
+  background: $color-error;
+  color: lighten($color-error, 40);
+}
+
+.flash-message--warning {
+  background: $color-warning;
+  color: lighten($color-warning, 40);
+}

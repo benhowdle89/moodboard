@@ -1,0 +1,14 @@
+.moodboard-image {
+  img {
+    width: 100%;
+  }
+  .overlay {
+    display: none;
+    z-index: $z-index-overlay;
+  }
+  &:hover {
+    .overlay {
+      display: block;
+    }
+  }
+}
