@@ -154,7 +154,8 @@ module.exports = Backbone.Router.extend({
 		}
 		instagram.search(term, function(data) {
 			swap(regions.content, new searchView({
-				data: data
+				data: data,
+				user: auth.user
 			}));
 		});
 	}
@@ -359,17 +360,60 @@ Backbone.$ = $;
 // templates
 var template = require('./../../../templates/search/index.html');
 
+// views
+var resultView = require('./result.js');
+
 module.exports = Backbone.View.extend({
 	initialize: function(options) {
 		options = options || {};
 		this.data = options.data;
+		this.user = options.user;
 	},
+
+	renderResult: function(result) {
+		this.$('[data-region="results"]').append(new resultView({
+			result: result,
+			parent: this,
+			user: this.user
+		}).render().el);
+	},
+
+	renderResults: function() {
+		this.data.forEach(this.renderResult.bind(this));
+	},
+
 	render: function() {
 		this.$el.html(template());
+		this.renderResults();
 		return this;
 	}
 });
-},{"./../../../templates/search/index.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/index.html","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/home/index.html":[function(require,module,exports){
+},{"./../../../templates/search/index.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/index.html","./result.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js":[function(require,module,exports){
+// libraries
+var Backbone = require('backbone');
+var $ = require('jquery');
+Backbone.$ = $;
+
+// templates
+var template = require('./../../../templates/search/result.html');
+
+module.exports = Backbone.View.extend({
+	initialize: function(options) {
+		options = options || {};
+		this.result = options.result;
+		this.user = options.user;
+		this.parent = options.parent;
+	},
+
+	render: function() {
+		this.$el.html(template({
+			result: this.result,
+			user: this.user
+		}));
+		return this;
+	}
+});
+},{"./../../../templates/search/result.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/result.html","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/home/index.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
@@ -422,7 +466,23 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "";
+  return "<h2>Items</h2>\n<div data-region=\"results\"></div>";
+  },"useData":true});
+
+},{"hbsfy/runtime":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/hbsfy/runtime.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/result.html":[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partials,data) {
+  return "		<p><span>Add to board</span></p>\n";
+  },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<div>\n	<img src=\""
+    + escapeExpression(lambda(((stack1 = ((stack1 = ((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.images : stack1)) != null ? stack1.thumbnail : stack1)) != null ? stack1.url : stack1), depth0))
+    + "\" alt=\"\">	\n	<p><a data-no-hijack href=\""
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.link : stack1), depth0))
+    + "\">view on Instagram.com</a></p>\n";
+  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.user : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</div>";
 },"useData":true});
 
 },{"hbsfy/runtime":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/hbsfy/runtime.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js":[function(require,module,exports){
