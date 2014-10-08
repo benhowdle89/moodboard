@@ -1,19 +1,19 @@
 @mixin inner-grid($width, $split, $span) {
-    $col-no : $split;
-    $pixel-width : ($width / 100) * ($grid-container-width - $grid-gutter-width); // width of the column in px
-    $inner-without-gutters : $pixel-width - ($grid-gutter-width * ($span - 1)); // pixel width of the colum without gutters
-    $inner-pixel-col : $inner-without-gutters / $span; //width of a single column in px
-    $inner-col-width : $inner-pixel-col / $pixel-width * 100;
-    $inner-gutter : $grid-gutter-width / $pixel-width * 100;
-    width: (($inner-col-width * $col-no) + ($inner-gutter * ($col-no - 1))) * $fluid-metric;
-    margin-right: $inner-gutter * $fluid-metric;
-    float: left;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    &:last-child {
-        margin-right: 0;
-    }
+  $col-no : $split;
+  $pixel-width : ($width / 100) * ($grid-container-width - $grid-gutter-width); // width of the column in px
+  $inner-without-gutters : $pixel-width - ($grid-gutter-width * ($span - 1)); // pixel width of the colum without gutters
+  $inner-pixel-col : $inner-without-gutters / $span; //width of a single column in px
+  $inner-col-width : $inner-pixel-col / $pixel-width * 100;
+  $inner-gutter : $grid-gutter-width / $pixel-width * 100;
+  width: (($inner-col-width * $col-no) + ($inner-gutter * ($col-no - 1))) * $fluid-metric;
+  margin-right: $inner-gutter * $fluid-metric;
+  float: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  &:nth-child(#{$span}n) {
+    margin-right: 0;
+  }
 }
 
 @mixin divisions($width) {

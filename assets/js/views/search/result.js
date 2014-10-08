@@ -20,5 +20,8 @@ module.exports = Backbone.View.extend({
 			user: this.user
 		}));
 		return this;
-	}
+	},
+
+	className: "one-third moodboard-image moodboard-image--result"
+
 });

@@ -565,8 +565,12 @@ module.exports = Backbone.View.extend({
 			user: this.user
 		}));
 		return this;
-	}
+	},
+
+	className: "one-third moodboard-image moodboard-image--result"
+
 });
+
 },{"./../../../templates/search/result.html":"/Users/Scott/Copy/web/moodboard/assets/templates/search/result.html","backbone":"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/board/index.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
@@ -665,21 +669,21 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<h2>Search Results</h2>\n<div data-region=\"results\">\n\n</div>\n";
+  return "<h2>Search Results</h2>\n<div data-region=\"results\" class=\"column grid-span-12\">\n\n</div>\n";
   },"useData":true});
 
 },{"hbsfy/runtime":"/Users/Scott/Copy/web/moodboard/node_modules/hbsfy/runtime.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/search/result.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partials,data) {
-  return "		<p><span>Add to board</span></p>\n";
+  return "	<p><span>Add to board</span></p>\n";
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<div class=\"column grid-span-3 moodboard-image moodboard-image--result\">\n	<img src=\""
+  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<img src=\""
     + escapeExpression(lambda(((stack1 = ((stack1 = ((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.images : stack1)) != null ? stack1.standard_resolution : stack1)) != null ? stack1.url : stack1), depth0))
     + "\" alt=\"\">\n";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.user : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</div>\n";
+  return buffer;
 },"useData":true});
 
 },{"hbsfy/runtime":"/Users/Scott/Copy/web/moodboard/node_modules/hbsfy/runtime.js"}],"/Users/Scott/Copy/web/moodboard/node_modules/backbone/backbone.js":[function(require,module,exports){
