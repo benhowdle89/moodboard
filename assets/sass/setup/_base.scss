@@ -13,35 +13,6 @@ body {
   box-sizing: border-box;
 }
 
-a {
-  color: #FF6C88;
-}
-
-h1 {
-  font-weight: 200;
-}
-
-.ui {
-  position: relative;
-  height: 400px;
-  overflow: scroll;
-  padding-bottom: 0;
-}
-
-.sidebar {
-  height: 400px;
-  overflow: scroll !important;
-  padding-bottom: 0 !important;
-}
-
-.sub-heading {
-  font-size: 1em;
-  text-transform: uppercase;
-  color: #333;
-  padding-top: .6em;
-  padding-bottom: .4em;
-}
-
 [data-hide-on-load] {
   display: none;
 }

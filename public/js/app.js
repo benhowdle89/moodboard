@@ -96,7 +96,7 @@ module.exports = Backbone.View.extend({
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "FOOTER";
+  return "<div class=\"footer-row\">\n  <div class=\"grid-container\">\n    <div class=\"column grid-span-3\">\n      &copy; Forever and ever.\n    </div>\n  </div>\n</div>\n";
   },"useData":true});
 
 },{"hbsfy/runtime":"/Users/Scott/Copy/web/moodboard/node_modules/hbsfy/runtime.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/layout/header.html":[function(require,module,exports){
