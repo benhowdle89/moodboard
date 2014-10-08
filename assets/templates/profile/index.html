@@ -6,9 +6,12 @@
 {{/each}}
 
 <h2>Items</h2>
-{{#each items}}
-	<div>
-		<img src="{{media.images.thumbnail.url}}" alt="">	
-		<p>Board: {{board_id.name}} | <a data-no-hijack href="{{media.link}}">view on Instagram.com</a></p>
-	</div>
+{{#each grouped}}
+	{{@key}}
+	{{#each .}}
+		<div>
+			<img src="{{media.images.thumbnail.url}}" alt="">	
+			<p>Board: {{board_id.name}} | <a data-no-hijack href="{{media.link}}">view on Instagram.com</a></p>
+		</div>
+	{{/each}}
 {{/each}}
