@@ -179,6 +179,17 @@ module.exports = {
 	},
 	getUser: function() {
 		return this.user;
+	},
+	logout: function(callback) {
+		var xhr = $.ajax({
+			url: settings.apiURL + 'logout',
+			success: function(data) {
+				if (xhr.status == 200) {
+					this.user = null;
+					callback();
+				}
+			}.bind(this)
+		});
 	}
 };
 },{"./../config/settings":"/Users/Scott/Copy/web/moodboard/assets/js/config/settings.js","jquery":"/Users/Scott/Copy/web/moodboard/node_modules/jquery/dist/jquery.js"}],"/Users/Scott/Copy/web/moodboard/assets/js/utilities/regions.js":[function(require,module,exports){
@@ -229,11 +240,16 @@ var $ = require('jquery');
 Backbone.$ = $;
 
 // templates
-var footerTemplate = require('./../../../templates/home/index.html');
+var template = require('./../../../templates/home/index.html');
 
 module.exports = Backbone.View.extend({
-	render: function(){
-		this.$el.html(footerTemplate());
+
+	initialize: function(options) {
+		options = options || {};
+	},
+
+	render: function() {
+		this.$el.html(template());
 		return this;
 	}
 });

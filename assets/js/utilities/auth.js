@@ -22,5 +22,16 @@ module.exports = {
 	},
 	getUser: function() {
 		return this.user;
+	},
+	logout: function(callback) {
+		var xhr = $.ajax({
+			url: settings.apiURL + 'logout',
+			success: function(data) {
+				if (xhr.status == 200) {
+					this.user = null;
+					callback();
+				}
+			}.bind(this)
+		});
 	}
 };
