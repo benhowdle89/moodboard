@@ -23,6 +23,7 @@ module.exports = {
 					return callback(null, medias);
 				});
 			} else {
+				console.log('FROM CACHE');
 				return callback(null, results);
 			}
 		});
