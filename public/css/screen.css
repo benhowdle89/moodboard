@@ -16,33 +16,6 @@ body {
   -moz-box-sizing: border-box;
        box-sizing: border-box; }
 
-<<<<<<< HEAD
-a {
-  color: #FF6C88; }
-
-h1 {
-  font-weight: 200; }
-
-.ui {
-  position: relative;
-  height: 400px;
-  overflow: scroll;
-  padding-bottom: 0; }
-
-.sidebar {
-  height: 400px;
-  overflow: scroll !important;
-  padding-bottom: 0 !important; }
-
-.sub-heading {
-  font-size: 1em;
-  text-transform: uppercase;
-  color: #333;
-  padding-top: 0.6em;
-  padding-bottom: 0.4em; }
-
-=======
->>>>>>> master
 [data-hide-on-load] {
   display: none; }
 
@@ -917,11 +890,8 @@ h1 {
 .icon-smashing:before {
   content: "\e71b"; }
 
-<<<<<<< HEAD
-=======
 /** Mixins for different animation long–hand options **/
 /** Mixin for keyframe syntax **/
->>>>>>> master
 /** Calculations used for converting grid metrics into unit-suffixed widths, don't change these unless you want something weird like an em-based container width **/
 /** Sassy maths to calculate the column widths, don't change this **/
 .grid-container {
@@ -3092,8 +3062,6 @@ h1 {
     .offset-12 {
       margin-left: 0; } }
 
-<<<<<<< HEAD
-=======
 .badge {
   min-width: 1em;
   height: 1em;
@@ -3183,6 +3151,5 @@ label {
   padding: 0;
   margin: 0; }
 
->>>>>>> master
 .app-header {
   padding: 1rem; }
