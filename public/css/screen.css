@@ -16,30 +16,6 @@ body {
   -moz-box-sizing: border-box;
        box-sizing: border-box; }
 
-a {
-  color: #FF6C88; }
-
-h1 {
-  font-weight: 200; }
-
-.ui {
-  position: relative;
-  height: 400px;
-  overflow: scroll;
-  padding-bottom: 0; }
-
-.sidebar {
-  height: 400px;
-  overflow: scroll !important;
-  padding-bottom: 0 !important; }
-
-.sub-heading {
-  font-size: 1em;
-  text-transform: uppercase;
-  color: #333;
-  padding-top: 0.6em;
-  padding-bottom: 0.4em; }
-
 [data-hide-on-load] {
   display: none; }
 
@@ -3139,9 +3115,17 @@ h1 {
   width: 100%;
   text-align: center; }
 
-.flash-message--success .flash-message--bg-color {
+.flash-message--success {
   background: green;
   color: #4dff4d; }
+
+.flash-message--error {
+  background: red;
+  color: #ffcccc; }
+
+.flash-message--warning {
+  background: yellow;
+  color: #fffecc; }
 
 input {
   border: 1px solid #ccc;
