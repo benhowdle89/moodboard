@@ -13,3 +13,8 @@ $color-bg-button : darken($color-bg, 10);
 
 // Flash/alerts
 $color-bg-flash : darken($color-bg, 10);
+
+// Z-index
+$z-index-base : 1;
+$z-index-overlay : $z-index-base + 10;
+$z-index-modal : $z-index-overlay + 10;
