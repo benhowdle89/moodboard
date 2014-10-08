@@ -1,6 +1,8 @@
 {{#if user}}
-	<p><a href="/profile">{{user.name}}</a></p>
-	<p><a href="/logout">Logout</a></p>
+	<a href="/profile">{{user.name}}</a>
+	<a href="/logout">Logout</a>
 {{else}}
-	<p>Get started...</p>
+	<a href="#" class="button button__cta button__inverted">
+		Get Started
+	</a>
 {{/if}}

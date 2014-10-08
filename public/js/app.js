@@ -567,7 +567,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 
-	className: "one-third moodboard-image moodboard-image--result"
+	className: "one-quarter moodboard-image moodboard-image--result"
 
 });
 
@@ -595,17 +595,17 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "	<p><a href=\"/profile\">"
+  return "	<a href=\"/profile\">"
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1.name : stack1), depth0))
-    + "</a></p>\n	<p><a href=\"/logout\">Logout</a></p>\n";
+    + "</a>\n	<a href=\"/logout\">Logout</a>\n";
 },"3":function(depth0,helpers,partials,data) {
-  return "	<p>Get started...</p>\n";
+  return "	<a href=\"#\" class=\"button button__cta button__inverted\">\n		Get Started\n	</a>\n";
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1;
+  var stack1, buffer = "";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.user : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.program(3, data),"data":data});
-  if (stack1 != null) { return stack1; }
-  else { return ''; }
-  },"useData":true});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"useData":true});
 
 },{"hbsfy/runtime":"/Users/Scott/Copy/web/moodboard/node_modules/hbsfy/runtime.js"}],"/Users/Scott/Copy/web/moodboard/assets/templates/home/index.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
