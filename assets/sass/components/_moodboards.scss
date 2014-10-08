@@ -1,7 +1,11 @@
 .moodboard-image {
   margin-bottom: $font-size-base;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: $radius-base;
   img {
     width: 100%;
+    border-radius: $radius-base;
   }
   .overlay {
     display: none;

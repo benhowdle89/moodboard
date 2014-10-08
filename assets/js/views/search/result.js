@@ -22,6 +22,6 @@ module.exports = Backbone.View.extend({
 		return this;
 	},
 
-	className: "one-third moodboard-image moodboard-image--result"
+	className: "one-quarter moodboard-image moodboard-image--result"
 
 });
