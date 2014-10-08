@@ -5,7 +5,10 @@ var itemModel = require('./../models/item.js');
 
 var itemsCollection = Backbone.Collection.extend({
 	url: settings.apiURL + 'items',
-	model: itemModel
+	model: itemModel,
+	getByBoard: function(board_id) {
+		this.url = settings.apiURL + 'boards/' + board_id + '/items';
+	}
 });
 
 module.exports = itemsCollection;

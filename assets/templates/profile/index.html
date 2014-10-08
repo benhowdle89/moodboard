@@ -2,7 +2,7 @@
 
 <h2>Boards</h2>
 {{#each boards}}
-	<p>{{name}}</p>
+	<p><a href="/board/{{_id}}">{{name}}</a></p>
 {{/each}}
 
 <h2>Items</h2>
@@ -11,7 +11,8 @@
 	{{#each .}}
 		<div>
 			<img src="{{media.images.thumbnail.url}}" alt="">	
-			<p>Board: {{board_id.name}} | <a data-no-hijack href="{{media.link}}">view on Instagram.com</a></p>
+			<p><a data-no-hijack href="{{media.link}}">view on Instagram.com</a></p>
 		</div>
 	{{/each}}
+	<p><a href="/board/{{board_id}}">View all</a></p>
 {{/each}}

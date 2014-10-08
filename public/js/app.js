@@ -47,7 +47,10 @@ var itemModel = require('./../models/item.js');
 
 var itemsCollection = Backbone.Collection.extend({
 	url: settings.apiURL + 'items',
-	model: itemModel
+	model: itemModel,
+	getByBoard: function(board_id) {
+		this.url = settings.apiURL + 'boards/' + board_id + '/items';
+	}
 });
 
 module.exports = itemsCollection;
@@ -89,6 +92,7 @@ var footerView = require('./../views/layout/footer.js');
 var homeView = require('./../views/home/');
 var profileView = require('./../views/profile/');
 var searchView = require('./../views/search/');
+var boardView = require('./../views/board/');
 
 module.exports = Backbone.Router.extend({
 	initialize: function(callback) {
@@ -103,6 +107,7 @@ module.exports = Backbone.Router.extend({
 		"home": "home",
 		"search/:term": "search",
 		"profile": "profile",
+		"board/:id": "board",
 		"logout": "logout"
 	},
 
@@ -165,6 +170,19 @@ module.exports = Backbone.Router.extend({
 		});
 	},
 
+	board: function(id) {
+		var items = new itemsCollection();
+		items.getByBoard(id);
+		items.fetch({
+			success: function() {
+				swap(regions.content, new boardView({
+					items: items,
+					user: auth.user
+				}));
+			}
+		});
+	},
+
 	logout: function() {
 		auth.logout(function() {
 			this.renderLayout();
@@ -175,7 +193,7 @@ module.exports = Backbone.Router.extend({
 	}
 
 });
-},{"./../collections/boards":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/collections/boards.js","./../collections/items":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/collections/items.js","./../utilities/auth.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/auth.js","./../utilities/instagram.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/instagram.js","./../utilities/regions.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js","./../utilities/swap.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/swap.js","./../views/home/":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/home/index.js","./../views/layout/footer.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/header.js","./../views/profile/":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/profile/index.js","./../views/search/":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/index.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js","lodash":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/lodash/dist/lodash.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/scott.js":[function(require,module,exports){
+},{"./../collections/boards":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/collections/boards.js","./../collections/items":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/collections/items.js","./../utilities/auth.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/auth.js","./../utilities/instagram.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/instagram.js","./../utilities/regions.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/regions.js","./../utilities/swap.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/swap.js","./../views/board/":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/board/index.js","./../views/home/":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/home/index.js","./../views/layout/footer.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/footer.js","./../views/layout/header.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/layout/header.js","./../views/profile/":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/profile/index.js","./../views/search/":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/index.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js","lodash":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/lodash/dist/lodash.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/scott.js":[function(require,module,exports){
 var $ = require('jquery');
 
 console.log('some DOM coding');
@@ -284,7 +302,31 @@ module.exports = function(region, newView) {
 	});
 
 };
-},{}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/components/auth.js":[function(require,module,exports){
+},{}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/board/index.js":[function(require,module,exports){
+// libraries
+var Backbone = require('backbone');
+var $ = require('jquery');
+Backbone.$ = $;
+
+// templates
+var template = require('./../../../templates/board/index.html');
+
+module.exports = Backbone.View.extend({
+	initialize: function(options) {
+		options = options || {};
+		this.user = options.user;
+		this.items = options.items;
+	},
+
+	render: function() {
+		this.$el.html(template({
+			user: this.user,
+			items: this.items.toJSON()
+		}));
+		return this;
+	}
+});
+},{"./../../../templates/board/index.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/board/index.html","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/components/auth.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');
@@ -431,12 +473,12 @@ module.exports = Backbone.View.extend({
 		items.forEach(function(item) {
 			if (grouped[item.board_id.name] === undefined) {
 				grouped[item.board_id.name] = [];
+				grouped[item.board_id.name].board_id = item.board_id._id;
 			}
 			if (grouped[item.board_id.name].length < 4) {
 				grouped[item.board_id.name].push(item);
 			}
 		});
-		console.log(grouped);
 		return grouped;
 	},
 
@@ -511,7 +553,26 @@ module.exports = Backbone.View.extend({
 		return this;
 	}
 });
-},{"./../../../templates/search/result.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/result.html","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/components/auth.html":[function(require,module,exports){
+},{"./../../../templates/search/result.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/result.html","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/board/index.html":[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partials,data) {
+  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
+  return "	<div>\n		<img src=\""
+    + escapeExpression(lambda(((stack1 = ((stack1 = ((stack1 = (depth0 != null ? depth0.media : depth0)) != null ? stack1.images : stack1)) != null ? stack1.thumbnail : stack1)) != null ? stack1.url : stack1), depth0))
+    + "\" alt=\"\">	\n		<p>Board: "
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.board_id : depth0)) != null ? stack1.name : stack1), depth0))
+    + " | <a data-no-hijack href=\""
+    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.media : depth0)) != null ? stack1.link : stack1), depth0))
+    + "\">view on Instagram.com</a></p>\n	</div>\n";
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var stack1, buffer = "<h2>Items</h2>\n";
+  stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.items : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"useData":true});
+
+},{"hbsfy/runtime":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/hbsfy/runtime.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/components/auth.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partials,data) {
@@ -554,23 +615,25 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-  return "	<p>"
+  return "	<p><a href=\"/board/"
+    + escapeExpression(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"_id","hash":{},"data":data}) : helper)))
+    + "\">"
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
-    + "</p>\n";
+    + "</a></p>\n";
 },"3":function(depth0,helpers,partials,data) {
-  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "	"
+  var stack1, helper, lambda=this.lambda, escapeExpression=this.escapeExpression, functionType="function", helperMissing=helpers.helperMissing, buffer = "	"
     + escapeExpression(lambda((data && data.key), depth0))
     + "\n";
   stack1 = helpers.each.call(depth0, depth0, {"name":"each","hash":{},"fn":this.program(4, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer;
+  return buffer + "	<p><a href=\"/board/"
+    + escapeExpression(((helper = (helper = helpers.board_id || (depth0 != null ? depth0.board_id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"board_id","hash":{},"data":data}) : helper)))
+    + "\">View all</a></p>\n";
 },"4":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
   return "		<div>\n			<img src=\""
     + escapeExpression(lambda(((stack1 = ((stack1 = ((stack1 = (depth0 != null ? depth0.media : depth0)) != null ? stack1.images : stack1)) != null ? stack1.thumbnail : stack1)) != null ? stack1.url : stack1), depth0))
-    + "\" alt=\"\">	\n			<p>Board: "
-    + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.board_id : depth0)) != null ? stack1.name : stack1), depth0))
-    + " | <a data-no-hijack href=\""
+    + "\" alt=\"\">	\n			<p><a data-no-hijack href=\""
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.media : depth0)) != null ? stack1.link : stack1), depth0))
     + "\">view on Instagram.com</a></p>\n		</div>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {

@@ -21,12 +21,12 @@ module.exports = Backbone.View.extend({
 		items.forEach(function(item) {
 			if (grouped[item.board_id.name] === undefined) {
 				grouped[item.board_id.name] = [];
+				grouped[item.board_id.name].board_id = item.board_id._id;
 			}
 			if (grouped[item.board_id.name].length < 4) {
 				grouped[item.board_id.name].push(item);
 			}
 		});
-		console.log(grouped);
 		return grouped;
 	},
 

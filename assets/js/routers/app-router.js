@@ -19,6 +19,7 @@ var footerView = require('./../views/layout/footer.js');
 var homeView = require('./../views/home/');
 var profileView = require('./../views/profile/');
 var searchView = require('./../views/search/');
+var boardView = require('./../views/board/');
 
 module.exports = Backbone.Router.extend({
 	initialize: function(callback) {
@@ -33,6 +34,7 @@ module.exports = Backbone.Router.extend({
 		"home": "home",
 		"search/:term": "search",
 		"profile": "profile",
+		"board/:id": "board",
 		"logout": "logout"
 	},
 
@@ -92,6 +94,19 @@ module.exports = Backbone.Router.extend({
 				data: data,
 				user: auth.user
 			}));
+		});
+	},
+
+	board: function(id) {
+		var items = new itemsCollection();
+		items.getByBoard(id);
+		items.fetch({
+			success: function() {
+				swap(regions.content, new boardView({
+					items: items,
+					user: auth.user
+				}));
+			}
 		});
 	},
 
