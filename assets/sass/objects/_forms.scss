@@ -6,6 +6,7 @@ input {
   display: block;
   width: 90%;
   max-width: 400px;
+  font-family: $font-family-body;
 }
 
 label {
@@ -20,9 +21,39 @@ label {
   margin-bottom: 1.4em;
 }
 
-.form--inline {
+.form__inline {
   display: inline-block;
   padding: 0;
   margin: 0;
+}
 
+.form__search {
+  background: $color-bg-highlight;
+  padding: $font-size-base 0;
+  text-align: center;
+  .search__wrapper {
+    max-width: 500px;
+    display: block;
+    margin: auto;
+    position: relative;
+  }
+  .input__search {
+    border: none;
+    border-bottom: 2px solid rgba($color-secondary, .4);
+    border-radius: 0;
+    font-size: scaled-value($font-size-base, 4, 1);
+    width: 100%;
+    font-weight: 100;
+    font-style: italic;
+    padding-left: 2rem;
+  }
+  .icon-search {
+    position: absolute;
+    left: .4rem;
+    bottom: 50%;
+    $bottom-margin : scaled-value($font-size-base, 4, 1) / 2;
+    margin-bottom: $bottom-margin * -1;
+    font-size: scaled-value($font-size-base, 4, 1);
+    color: rgba($color-secondary, .4);
+  }
 }

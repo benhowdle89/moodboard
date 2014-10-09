@@ -9,7 +9,8 @@ body {
   margin: 0;
   padding: 0;
   background: white;
-  font-size: 15px; }
+  font-size: 15px;
+  background: #fafafa; }
 
 * {
   -moz-box-sizing: border-box;
@@ -3076,7 +3077,7 @@ body {
   font-family: "Lato", "Avenir", sans-serif;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   text-decoration: none;
-  background: #e6e6e6;
+  background: #e1e1e1;
   text-transform: uppercase;
   font-weight: bold;
   -webkit-transition: all 0.2s ease-in-out;
@@ -3120,7 +3121,7 @@ body {
 
 .flash-message {
   padding: 1rem 0;
-  background: #e6e6e6;
+  background: #e1e1e1;
   width: 100%;
   text-align: center; }
 
@@ -3143,7 +3144,8 @@ input {
   margin-bottom: 0.4em;
   display: block;
   width: 90%;
-  max-width: 400px; }
+  max-width: 400px;
+  font-family: "Lato", "Avenir", sans-serif; }
 
 label {
   display: block;
@@ -3155,10 +3157,36 @@ label {
 .control-group {
   margin-bottom: 1.4em; }
 
-.form--inline {
+.form__inline {
   display: inline-block;
   padding: 0;
   margin: 0; }
+
+.form__search {
+  background: white;
+  padding: 1rem 0;
+  text-align: center; }
+  .form__search .search__wrapper {
+    max-width: 500px;
+    display: block;
+    margin: auto;
+    position: relative; }
+  .form__search .input__search {
+    border: none;
+    border-bottom: 2px solid rgba(68, 114, 151, 0.4);
+    border-radius: 0;
+    font-size: 1.5rem;
+    width: 100%;
+    font-weight: 100;
+    font-style: italic;
+    padding-left: 2rem; }
+  .form__search .icon-search {
+    position: absolute;
+    left: 0.4rem;
+    bottom: 50%;
+    margin-bottom: -0.75rem;
+    font-size: 1.5rem;
+    color: rgba(68, 114, 151, 0.4); }
 
 .app-header {
   padding: 1rem;
