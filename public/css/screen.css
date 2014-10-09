@@ -3168,3 +3168,9 @@ label {
   .form__login input {
     display: block;
     margin-bottom: 1rem; }
+
+.logo {
+  font-size: 2rem;
+  font-family: "Avenir", sans-serif;
+  color: white;
+  text-decoration: none; }
