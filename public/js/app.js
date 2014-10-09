@@ -680,7 +680,9 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<img src=\""
     + escapeExpression(lambda(((stack1 = ((stack1 = ((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.images : stack1)) != null ? stack1.standard_resolution : stack1)) != null ? stack1.url : stack1), depth0))
-    + "\" alt=\"\">\n";
+    + "\" alt=\"\">\n<div class=\"overlay\">\n	<a href=\"#\" class=\"add-to-board\">\n		+\n	</a>\n	<footer class=\"overlay-footer\">\n		<span class=\"like-count\">\n			<i class=\"icon-heart\"></i>\n			"
+    + escapeExpression(lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.likes : stack1)) != null ? stack1.count : stack1), depth0))
+    + "\n		</span>\n	</footer>\n</div>\n";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.user : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer;

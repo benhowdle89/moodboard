@@ -3,17 +3,61 @@
   background: white;
   border: 1px solid #ccc;
   border-radius: $radius-base;
+  position: relative;
+  overflow: hidden;
   img {
     width: 100%;
     border-radius: $radius-base;
+    transition: all .3s ease;
   }
   .overlay {
-    display: none;
+    // display: none;
     z-index: $z-index-overlay;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: black;
+    color: white;
+    border-radius: $radius-base;
+    opacity: .5;
+    transform: translateY(100%);
+    transition: -webkit-transform .2s ease;
+    .overlay-footer {
+      position: absolute;
+      width: 100%;
+      bottom: scaled-value($font-size-base, 1, 1);
+      left: scaled-value($font-size-base, 1, 1);
+      font-size: scaled-value($font-size-base, 4, 1);
+      font-weight: 100;
+    }
+    .add-to-board {
+      color: white;
+      width: 100px;
+      height: 100px;
+      font-size: 90px;
+      line-height: 1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -50px;
+      margin-left: -50px;
+      text-decoration: none;
+      border-radius: 999em;
+      display: block;
+      text-align: center;
+      border: 2px solid white;
+      font-weight: 100;
+    }
   }
   &:hover {
     .overlay {
       display: block;
+      transform: translateY(0);
+    }
+    img {
+      filter: blur(20px);
     }
   }
 }
