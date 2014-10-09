@@ -1,5 +1,7 @@
 var config = require('./../config.json');
 
+var async = require('async');
+
 var ig = require('instagram-node').instagram();
 ig.use(config.instagram);
 

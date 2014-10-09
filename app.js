@@ -207,7 +207,11 @@ app.get('/api/logout', function(req, res) {
 var routes = require('./routes/');
 
 app.post('/api/boards', routes.createBoard);
-app.post('/api/instagram/search', routes.instagramSearch)
+app.post('/api/instagram/search', routes.instagramSearch);
+app.get('/api/boards', routes.getBoards);
+app.get('/api/boards/:id/items', routes.getBoardItems);
+app.get('/api/items', routes.getUserItems);
+app.post('/api/boards/:id', routes.addToBoard);
 
 app.use(function(req, res) {
 	res.render('index.html');
