@@ -56,7 +56,7 @@ var itemsCollection = Backbone.Collection.extend({
 module.exports = itemsCollection;
 },{"./../config/settings":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/config/settings.js","./../models/item.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/models/item.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/config/settings.js":[function(require,module,exports){
 module.exports = {
-	apiURL: (['127.0.0.1', 'localhost'].indexOf(window.location.hostname) > -1) ? "/api/" : 'http://moodboard.in/api/',
+	apiURL: (['127.0.0.1', 'localhost'].indexOf(window.location.hostname) > -1) ? "/api/" : 'http://moodboardin.herokuapp.com/api/',
 };
 },{}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/models/board.js":[function(require,module,exports){
 var Backbone = require('backbone');
