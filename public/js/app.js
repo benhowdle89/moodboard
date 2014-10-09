@@ -705,8 +705,7 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.media : depth0)) != null ? stack1.link : stack1), depth0))
     + "\">view on Instagram.com</a></p>\n		</div>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1.name : stack1), depth0))
-    + "\n\n<h2>Boards</h2>\n";
+  var stack1, buffer = "<h2>Boards</h2>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.boards : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   buffer += "<input type=\"text\" placeholder=\"Add board...\" id=\"addBoard\" />\n\n<h2>Items</h2>\n";
