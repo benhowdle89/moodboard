@@ -13,26 +13,6 @@ module.exports = Backbone.View.extend({
 		this.router = options.router;
 	},
 
-	events: {
-		"keyup [name='term']": function(e) {
-			if (e.keyCode == 13) {
-				var val = e.currentTarget.value;
-				if (val) {
-					this.search(val);
-				}
-			}
-		}
-	},
-
-	search: function(term) {
-		if (!term) {
-			return;
-		}
-		this.router.navigate('search/' + term, {
-			trigger: true
-		});
-	},
-
 	render: function() {
 		this.$el.html(footerTemplate());
 		return this;

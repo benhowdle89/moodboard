@@ -377,26 +377,6 @@ module.exports = Backbone.View.extend({
 		this.router = options.router;
 	},
 
-	events: {
-		"keyup [name='term']": function(e) {
-			if (e.keyCode == 13) {
-				var val = e.currentTarget.value;
-				if (val) {
-					this.search(val);
-				}
-			}
-		}
-	},
-
-	search: function(term) {
-		if (!term) {
-			return;
-		}
-		this.router.navigate('search/' + term, {
-			trigger: true
-		});
-	},
-
 	render: function() {
 		this.$el.html(footerTemplate());
 		return this;
@@ -435,6 +415,26 @@ module.exports = Backbone.View.extend({
 		options = options || {};
 		this.user = options.user;
 		this.router = options.router;
+	},
+
+	events: {
+		"keyup [name='term']": function(e) {
+			if (e.keyCode == 13) {
+				var val = e.currentTarget.value;
+				if (val) {
+					this.search(val);
+				}
+			}
+		}
+	},
+
+	search: function(term) {
+		if (!term) {
+			return;
+		}
+		this.router.navigate('search/' + term, {
+			trigger: true
+		});
 	},
 
 	renderAuth: function() {
@@ -675,7 +675,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<header class=\"app-header\">\n  <div class=\"grid-container\">\n    <div class=\"column grid-span-3\">\n      <a href=\"/\" class=\"logo\">Moodboard</a>\n    </div>\n    <div class=\"column grid-span-4 float-right\">\n      <div data-region=\"auth\"></div>\n    </div>\n  </div>\n</header>\n<form action=\"/search/\" class=\"form__search\">\n  <div class=\"grid-container search__wrapper\">\n    <input type=\"text\" name=\"term\" placeholder=\"Search Instagram…\" class=\"input input__search\" />\n    <i class=\"icon-search\"></i>\n  </div>\n</form>\n";
+  return "<header class=\"app-header\">\n  <div class=\"grid-container\">\n    <div class=\"column grid-span-3\">\n      <a href=\"/\" class=\"logo\">Moodboard</a>\n    </div>\n    <div class=\"column grid-span-4 float-right\">\n      <div data-region=\"auth\"></div>\n    </div>\n  </div>\n</header>\n<form action=\"/search/\" class=\"form__search\">\n  <div class=\"grid-container search__wrapper\">\n    <input type=\"text\" name=\"term\" placeholder=\"Search Instagram...\" class=\"input input__search\" />\n    <i class=\"icon-search\"></i>\n  </div>\n</form>\n";
   },"useData":true});
 
 },{"hbsfy/runtime":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/hbsfy/runtime.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/profile/index.html":[function(require,module,exports){
