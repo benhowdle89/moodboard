@@ -1,19 +1,19 @@
-{{user.name}}
-
 <h2>Boards</h2>
 {{#each boards}}
 	<p><a href="/board/{{_id}}">{{name}}</a></p>
 {{/each}}
 <input type="text" placeholder="Add board..." id="addBoard" />
 
-<h2>Items</h2>
-{{#each grouped}}
-	{{@key}}
-	{{#each .}}
-		<div>
-			<img src="{{media.images.thumbnail.url}}" alt="">	
-			<p><a data-no-hijack href="{{media.link}}">view on Instagram.com</a></p>
-		</div>
+{{#if grouped.length}}
+	<h2>Items</h2>
+	{{#each grouped}}
+		{{@key}}
+		{{#each .}}
+			<div>
+				<img src="{{media.images.thumbnail.url}}" alt="">	
+				<p><a data-no-hijack href="{{media.link}}">view on Instagram.com</a></p>
+			</div>
+		{{/each}}
+		<p><a href="/board/{{board_id}}">View all</a></p>
 	{{/each}}
-	<p><a href="/board/{{board_id}}">View all</a></p>
-{{/each}}
+{{/if}}

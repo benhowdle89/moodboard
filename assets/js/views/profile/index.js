@@ -14,7 +14,7 @@ module.exports = Backbone.View.extend({
 		this.boards = options.boards;
 		this.groupedItems = this.groupItemsIntoBoards(this.items.toJSON());
 
-		this.listenTo(this.boards, 'add remove', this.render);
+		this.listenTo(this.boards, 'add', this.render);
 
 	},
 

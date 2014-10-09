@@ -35,7 +35,10 @@ var boardModel = require('./../models/board.js');
 
 var boardsCollection = Backbone.Collection.extend({
 	url: settings.apiURL + 'boards',
-	model: boardModel
+	model: boardModel,
+	addToBoard: function(board_id) {
+		this.url = settings.apiURL + 'boards/' + board_id;
+	}
 });
 
 module.exports = boardsCollection;
@@ -464,7 +467,7 @@ module.exports = Backbone.View.extend({
 		this.boards = options.boards;
 		this.groupedItems = this.groupItemsIntoBoards(this.items.toJSON());
 
-		this.listenTo(this.boards, 'add remove', this.render);
+		this.listenTo(this.boards, 'add', this.render);
 
 	},
 
@@ -518,6 +521,10 @@ var instagram = require('./../../utilities/instagram.js');
 // templates
 var template = require('./../../../templates/search/index.html');
 
+// internal libs
+var itemModel = require('./../../models/item');
+var boardsCollection = require('./../../collections/boards');
+
 // views
 var resultView = require('./result.js');
 
@@ -540,18 +547,31 @@ module.exports = Backbone.View.extend({
 		});
 	},
 
+	saveItem: function(result, board_id) {
+		this.boards.addToBoard(board_id);
+		this.boards.create({
+			media_id: result.id
+		});
+	},
+
 	renderResult: function(result) {
 		this.$('[data-region="results"]').append(new resultView({
 			result: result,
 			parent: this,
-			user: this.user
+			user: this.user,
+			boards: this.boards
 		}).render().el);
 	},
 
 	renderResults: function() {
 		instagram.search(this.term, function(data) {
-			this.sortedData = this.sortByLikes(data);
-			this.sortedData.forEach(this.renderResult.bind(this));
+			this.boards = new boardsCollection();
+			this.boards.fetch({
+				success: function() {
+					this.sortedData = this.sortByLikes(data);
+					this.sortedData.forEach(this.renderResult.bind(this));
+				}.bind(this)
+			});
 		}.bind(this));
 	},
 
@@ -561,7 +581,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	}
 });
-},{"./../../../templates/search/index.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/index.html","./../../utilities/instagram.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/instagram.js","./result.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js":[function(require,module,exports){
+},{"./../../../templates/search/index.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/index.html","./../../collections/boards":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/collections/boards.js","./../../models/item":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/models/item.js","./../../utilities/instagram.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/instagram.js","./result.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');
@@ -576,6 +596,18 @@ module.exports = Backbone.View.extend({
 		this.result = options.result;
 		this.user = options.user;
 		this.parent = options.parent;
+		this.boards = options.boards;
+	},
+
+	events: {
+		"click #addToBoard": function(e) {
+			e.preventDefault();
+			this.saveItem();
+		}
+	},
+
+	saveItem: function() {
+		this.parent.saveItem.call(this.parent, this.result, this.boards.first().get('_id'));
 	},
 
 	render: function() {
@@ -589,7 +621,6 @@ module.exports = Backbone.View.extend({
 	className: "one-quarter moodboard-image moodboard-image--result"
 
 });
-
 },{"./../../../templates/search/result.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/result.html","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/board/index.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
@@ -658,28 +689,32 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + "</a></p>\n";
 },"3":function(depth0,helpers,partials,data) {
-  var stack1, helper, lambda=this.lambda, escapeExpression=this.escapeExpression, functionType="function", helperMissing=helpers.helperMissing, buffer = "	"
+  var stack1, buffer = "	<h2>Items</h2>\n";
+  stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.grouped : depth0), {"name":"each","hash":{},"fn":this.program(4, data),"inverse":this.noop,"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"4":function(depth0,helpers,partials,data) {
+  var stack1, helper, lambda=this.lambda, escapeExpression=this.escapeExpression, functionType="function", helperMissing=helpers.helperMissing, buffer = "		"
     + escapeExpression(lambda((data && data.key), depth0))
     + "\n";
-  stack1 = helpers.each.call(depth0, depth0, {"name":"each","hash":{},"fn":this.program(4, data),"inverse":this.noop,"data":data});
+  stack1 = helpers.each.call(depth0, depth0, {"name":"each","hash":{},"fn":this.program(5, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "	<p><a href=\"/board/"
+  return buffer + "		<p><a href=\"/board/"
     + escapeExpression(((helper = (helper = helpers.board_id || (depth0 != null ? depth0.board_id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"board_id","hash":{},"data":data}) : helper)))
     + "\">View all</a></p>\n";
-},"4":function(depth0,helpers,partials,data) {
+},"5":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression;
-  return "		<div>\n			<img src=\""
+  return "			<div>\n				<img src=\""
     + escapeExpression(lambda(((stack1 = ((stack1 = ((stack1 = (depth0 != null ? depth0.media : depth0)) != null ? stack1.images : stack1)) != null ? stack1.thumbnail : stack1)) != null ? stack1.url : stack1), depth0))
-    + "\" alt=\"\">	\n			<p><a data-no-hijack href=\""
+    + "\" alt=\"\">	\n				<p><a data-no-hijack href=\""
     + escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.media : depth0)) != null ? stack1.link : stack1), depth0))
-    + "\">view on Instagram.com</a></p>\n		</div>\n";
+    + "\">view on Instagram.com</a></p>\n			</div>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = escapeExpression(lambda(((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1.name : stack1), depth0))
-    + "\n\n<h2>Boards</h2>\n";
+  var stack1, buffer = "<h2>Boards</h2>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.boards : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  buffer += "<input type=\"text\" placeholder=\"Add board...\" id=\"addBoard\" />\n\n<h2>Items</h2>\n";
-  stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.grouped : depth0), {"name":"each","hash":{},"fn":this.program(3, data),"inverse":this.noop,"data":data});
+  buffer += "<input type=\"text\" placeholder=\"Add board...\" id=\"addBoard\" />\n\n";
+  stack1 = helpers['if'].call(depth0, ((stack1 = (depth0 != null ? depth0.grouped : depth0)) != null ? stack1.length : stack1), {"name":"if","hash":{},"fn":this.program(3, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer;
 },"useData":true});
@@ -699,7 +734,7 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<img src=\""
     + escapeExpression(lambda(((stack1 = ((stack1 = ((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.images : stack1)) != null ? stack1.standard_resolution : stack1)) != null ? stack1.url : stack1), depth0))
-    + "\" alt=\"\">\n<div class=\"overlay\">\n	<a href=\"#\" class=\"add-to-board\">\n		+\n	</a>\n	<footer class=\"overlay-footer\">\n		<span class=\"like-count\">\n			<i class=\"icon-heart\"></i>\n			"
+    + "\" alt=\"\">\n<div class=\"overlay\">\n	<a href=\"#\" data-no-hijack class=\"add-to-board\" id=\"addToBoard\">\n		+\n	</a>\n	<footer class=\"overlay-footer\">\n		<span class=\"like-count\">\n			<i class=\"icon-heart\"></i>\n			"
     + escapeExpression(lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.likes : stack1)) != null ? stack1.count : stack1), depth0))
     + "\n		</span>\n	</footer>\n</div>\n";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.user : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});

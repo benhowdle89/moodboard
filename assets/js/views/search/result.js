@@ -12,6 +12,18 @@ module.exports = Backbone.View.extend({
 		this.result = options.result;
 		this.user = options.user;
 		this.parent = options.parent;
+		this.boards = options.boards;
+	},
+
+	events: {
+		"click #addToBoard": function(e) {
+			e.preventDefault();
+			this.saveItem();
+		}
+	},
+
+	saveItem: function() {
+		this.parent.saveItem.call(this.parent, this.result, this.boards.first().get('_id'));
 	},
 
 	render: function() {
