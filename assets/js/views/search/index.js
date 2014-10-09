@@ -3,6 +3,9 @@ var Backbone = require('backbone');
 var $ = require('jquery');
 Backbone.$ = $;
 
+// internal libs
+var instagram = require('./../../utilities/instagram.js');
+
 // templates
 var template = require('./../../../templates/search/index.html');
 
@@ -12,10 +15,8 @@ var resultView = require('./result.js');
 module.exports = Backbone.View.extend({
 	initialize: function(options) {
 		options = options || {};
-		this.data = options.data;
 		this.user = options.user;
-		this.sortedData = this.sortByLikes(this.data);
-		console.log(this.sortedData);
+		this.term = options.term;
 	},
 
 	sortByLikes: function(items) {
@@ -39,7 +40,10 @@ module.exports = Backbone.View.extend({
 	},
 
 	renderResults: function() {
-		this.sortedData.forEach(this.renderResult.bind(this));
+		instagram.search(this.term, function(data) {
+			this.sortedData = this.sortByLikes(data);
+			this.sortedData.forEach(this.renderResult.bind(this));
+		}.bind(this));
 	},
 
 	render: function() {

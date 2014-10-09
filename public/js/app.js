@@ -162,12 +162,10 @@ module.exports = Backbone.Router.extend({
 		if (!term) {
 			return;
 		}
-		instagram.search(term, function(data) {
-			swap(regions.content, new searchView({
-				data: data,
-				user: auth.user
-			}));
-		});
+		swap(regions.content, new searchView({
+			user: auth.user,
+			term: term
+		}));
 	},
 
 	board: function(id) {
@@ -497,6 +495,9 @@ var Backbone = require('backbone');
 var $ = require('jquery');
 Backbone.$ = $;
 
+// internal libs
+var instagram = require('./../../utilities/instagram.js');
+
 // templates
 var template = require('./../../../templates/search/index.html');
 
@@ -506,10 +507,8 @@ var resultView = require('./result.js');
 module.exports = Backbone.View.extend({
 	initialize: function(options) {
 		options = options || {};
-		this.data = options.data;
 		this.user = options.user;
-		this.sortedData = this.sortByLikes(this.data);
-		console.log(this.sortedData);
+		this.term = options.term;
 	},
 
 	sortByLikes: function(items) {
@@ -533,7 +532,10 @@ module.exports = Backbone.View.extend({
 	},
 
 	renderResults: function() {
-		this.sortedData.forEach(this.renderResult.bind(this));
+		instagram.search(this.term, function(data) {
+			this.sortedData = this.sortByLikes(data);
+			this.sortedData.forEach(this.renderResult.bind(this));
+		}.bind(this));
 	},
 
 	render: function() {
@@ -542,7 +544,7 @@ module.exports = Backbone.View.extend({
 		return this;
 	}
 });
-},{"./../../../templates/search/index.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/index.html","./result.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js":[function(require,module,exports){
+},{"./../../../templates/search/index.html":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/search/index.html","./../../utilities/instagram.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/utilities/instagram.js","./result.js":"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js","backbone":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js","jquery":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/jquery/dist/jquery.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/js/views/search/result.js":[function(require,module,exports){
 // libraries
 var Backbone = require('backbone');
 var $ = require('jquery');

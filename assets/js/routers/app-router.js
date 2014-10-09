@@ -89,12 +89,10 @@ module.exports = Backbone.Router.extend({
 		if (!term) {
 			return;
 		}
-		instagram.search(term, function(data) {
-			swap(regions.content, new searchView({
-				data: data,
-				user: auth.user
-			}));
-		});
+		swap(regions.content, new searchView({
+			user: auth.user,
+			term: term
+		}));
 	},
 
 	board: function(id) {
