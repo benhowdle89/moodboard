@@ -47,19 +47,29 @@ module.exports = Backbone.View.extend({
 			result: result,
 			parent: this,
 			user: this.user,
-			boards: this.boards
+			boards: this.boards || null
 		}).render().el);
 	},
 
 	renderResults: function() {
 		instagram.search(this.term, function(data) {
 			this.boards = new boardsCollection();
-			this.boards.fetch({
-				success: function() {
-					this.sortedData = this.sortByLikes(data);
-					this.sortedData.forEach(this.renderResult.bind(this));
-				}.bind(this)
-			});
+
+			function doRender(callback) {
+				if (this.user) {
+					this.boards.fetch({
+						success: callback.bind(this)
+					});
+				} else {
+					callback();
+				}
+			}
+
+			doRender(function() {
+				this.sortedData = this.sortByLikes(data);
+				this.sortedData.forEach(this.renderResult.bind(this));
+			}.bind(this));
+
 		}.bind(this));
 	},
 

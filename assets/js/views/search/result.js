@@ -12,7 +12,7 @@ module.exports = Backbone.View.extend({
 		this.result = options.result;
 		this.user = options.user;
 		this.parent = options.parent;
-		this.boards = options.boards;
+		this.boards = options.boards || null;
 	},
 
 	events: {

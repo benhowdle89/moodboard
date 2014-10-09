@@ -1,8 +1,10 @@
 <img src="{{result.images.standard_resolution.url}}" alt="">
 <div class="overlay">
-	<a href="#" data-no-hijack class="add-to-board" id="addToBoard">
-		+
-	</a>
+	{{#if user}}
+		<a href="#" data-no-hijack class="add-to-board" id="addToBoard">
+			+
+		</a>
+	{{/if}}
 	<footer class="overlay-footer">
 		<span class="like-count">
 			<i class="icon-heart"></i>
@@ -10,6 +12,3 @@
 		</span>
 	</footer>
 </div>
-{{#if user}}
-	<p><span>Add to board</span></p>
-{{/if}}

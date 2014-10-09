@@ -559,19 +559,29 @@ module.exports = Backbone.View.extend({
 			result: result,
 			parent: this,
 			user: this.user,
-			boards: this.boards
+			boards: this.boards || null
 		}).render().el);
 	},
 
 	renderResults: function() {
 		instagram.search(this.term, function(data) {
 			this.boards = new boardsCollection();
-			this.boards.fetch({
-				success: function() {
-					this.sortedData = this.sortByLikes(data);
-					this.sortedData.forEach(this.renderResult.bind(this));
-				}.bind(this)
-			});
+
+			function doRender(callback) {
+				if (this.user) {
+					this.boards.fetch({
+						success: callback.bind(this)
+					});
+				} else {
+					callback();
+				}
+			}
+
+			doRender(function() {
+				this.sortedData = this.sortByLikes(data);
+				this.sortedData.forEach(this.renderResult.bind(this));
+			}.bind(this));
+
 		}.bind(this));
 	},
 
@@ -596,7 +606,7 @@ module.exports = Backbone.View.extend({
 		this.result = options.result;
 		this.user = options.user;
 		this.parent = options.parent;
-		this.boards = options.boards;
+		this.boards = options.boards || null;
 	},
 
 	events: {
@@ -661,8 +671,8 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "MOODBOARDS HERE\n";
-  },"useData":true});
+  return "";
+},"useData":true});
 
 },{"hbsfy/runtime":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/hbsfy/runtime.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/layout/footer.html":[function(require,module,exports){
 // hbsfy compiled Handlebars template
@@ -675,7 +685,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<header class=\"app-header\">\n  <div class=\"grid-container\">\n    <div class=\"column grid-span-3\">\n      <a href=\"/\" class=\"logo\">Moodboard</a>\n    </div>\n    <div class=\"column grid-span-4 float-right\">\n      <div data-region=\"auth\"></div>\n    </div>\n  </div>\n</header>\n<form action=\"/search/\" class=\"form__search\">\n  <div class=\"grid-container search__wrapper\">\n    <input type=\"text\" name=\"term\" placeholder=\"Search Instagram...\" class=\"input input__search\" />\n    <i class=\"icon-search\"></i>\n  </div>\n</form>\n";
+  return "<header class=\"app-header\">\n  <div class=\"grid-container\">\n    <div class=\"column grid-span-3\">\n      <a href=\"/\" class=\"logo\">Moodboard</a>\n    </div>\n    <div class=\"column grid-span-4 float-right\">\n      <div data-region=\"auth\"></div>\n    </div>\n  </div>\n</header>\n<div class=\"form__search\">\n  <div class=\"grid-container search__wrapper\">\n    <input type=\"text\" name=\"term\" placeholder=\"Search Instagram...\" class=\"input input__search\" />\n    <i class=\"icon-search\"></i>\n  </div>\n</div>\n";
   },"useData":true});
 
 },{"hbsfy/runtime":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/hbsfy/runtime.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/assets/templates/profile/index.html":[function(require,module,exports){
@@ -730,16 +740,16 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partials,data) {
-  return "	<p><span>Add to board</span></p>\n";
+  return "		<a href=\"#\" data-no-hijack class=\"add-to-board\" id=\"addToBoard\">\n			+\n		</a>\n";
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, lambda=this.lambda, escapeExpression=this.escapeExpression, buffer = "<img src=\""
     + escapeExpression(lambda(((stack1 = ((stack1 = ((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.images : stack1)) != null ? stack1.standard_resolution : stack1)) != null ? stack1.url : stack1), depth0))
-    + "\" alt=\"\">\n<div class=\"overlay\">\n	<a href=\"#\" data-no-hijack class=\"add-to-board\" id=\"addToBoard\">\n		+\n	</a>\n	<footer class=\"overlay-footer\">\n		<span class=\"like-count\">\n			<i class=\"icon-heart\"></i>\n			"
-    + escapeExpression(lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.likes : stack1)) != null ? stack1.count : stack1), depth0))
-    + "\n		</span>\n	</footer>\n</div>\n";
+    + "\" alt=\"\">\n<div class=\"overlay\">\n";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.user : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer;
+  return buffer + "	<footer class=\"overlay-footer\">\n		<span class=\"like-count\">\n			<i class=\"icon-heart\"></i>\n			"
+    + escapeExpression(lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.result : depth0)) != null ? stack1.likes : stack1)) != null ? stack1.count : stack1), depth0))
+    + "\n		</span>\n	</footer>\n</div>";
 },"useData":true});
 
 },{"hbsfy/runtime":"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/hbsfy/runtime.js"}],"/Users/benhowdle/Dropbox/htdocs/moodboardin/node_modules/backbone/backbone.js":[function(require,module,exports){
