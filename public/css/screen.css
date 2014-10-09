@@ -9,7 +9,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background: white;
+  background: #fafafa;
   font-size: 15px; }
 
 * {
@@ -3172,5 +3172,4 @@ label {
 .logo {
   font-size: 2rem;
   font-family: "Avenir", sans-serif;
-  color: white;
   text-decoration: none; }
