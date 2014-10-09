@@ -1,0 +1,5 @@
+@function scaled-value($base, $position, $units : 1) {
+  $multiplier : nth($scale, $position); // nth starts at 1, not 0, so fuck us, right?
+  $value : $base * $multiplier * $units;
+  @return $value;
+}
