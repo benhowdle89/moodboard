@@ -463,6 +463,23 @@ module.exports = Backbone.View.extend({
 		this.items = options.items;
 		this.boards = options.boards;
 		this.groupedItems = this.groupItemsIntoBoards(this.items.toJSON());
+
+		this.listenTo(this.boards, 'add remove', this.render);
+
+	},
+
+	events: {
+		"keyup #addBoard": function(e){
+			if(e.keyCode == 13){
+				this.addBoard(e.currentTarget.value);
+			}
+		}
+	},
+
+	addBoard: function(name){
+		this.boards.create({
+			name: name
+		});
 	},
 
 	groupItemsIntoBoards: function(items) {
@@ -661,7 +678,7 @@ module.exports = HandlebarsCompiler.template({"1":function(depth0,helpers,partia
     + "\n\n<h2>Boards</h2>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.boards : depth0), {"name":"each","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  buffer += "\n<h2>Items</h2>\n";
+  buffer += "<input type=\"text\" placeholder=\"Add board...\" id=\"addBoard\" />\n\n<h2>Items</h2>\n";
   stack1 = helpers.each.call(depth0, (depth0 != null ? depth0.grouped : depth0), {"name":"each","hash":{},"fn":this.program(3, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
   return buffer;

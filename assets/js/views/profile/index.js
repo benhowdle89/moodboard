@@ -13,6 +13,23 @@ module.exports = Backbone.View.extend({
 		this.items = options.items;
 		this.boards = options.boards;
 		this.groupedItems = this.groupItemsIntoBoards(this.items.toJSON());
+
+		this.listenTo(this.boards, 'add remove', this.render);
+
+	},
+
+	events: {
+		"keyup #addBoard": function(e){
+			if(e.keyCode == 13){
+				this.addBoard(e.currentTarget.value);
+			}
+		}
+	},
+
+	addBoard: function(name){
+		this.boards.create({
+			name: name
+		});
 	},
 
 	groupItemsIntoBoards: function(items) {
